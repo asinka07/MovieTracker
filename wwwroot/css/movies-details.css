@@ -127,3 +127,56 @@
         outline: none;
         border-color: #3B82F6;
     }
+
+
+.delete-modal {
+    background: #0f172a;
+    border-radius: 24px;
+    padding: 10px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+.modal-title {
+    border: none;
+    padding-bottom: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fbbf24;
+}
+
+
+.modal-body {
+    padding-top: 10px;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.movie-name {
+    color: #3b82f6;
+}
+
+.warning-text {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.modal-footer {
+    border: none;
+    gap: 10px;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 10px;
+}
+
+.btn-outline-light {
+    border-radius: 10px;
+    padding: 8px 18px;
+}

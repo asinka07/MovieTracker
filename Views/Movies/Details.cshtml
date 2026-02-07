@@ -8,9 +8,7 @@
 		<div class="movie-buttons">
 			<a asp-action="Index" class="btn btn-dark">← Back</a>
 			<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-light">Edit</a>
-			<form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post" style="display:inline-block;">
-				<button type="submit" class="btn btn-danger">Delete</button>
-			</form>
+			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
 		</div>
 	</div>
 
@@ -52,15 +50,27 @@
 
 		<form class="review-form" asp-action="AddReview" method="post">
 			<input type="hidden" name="MovieId" value="@Model.Id" />
-
-			<textarea name="Comment"
-					  class="review-textarea"
-					  placeholder="Write your review here..."
-					  required></textarea>
-
-			<button type="submit" class="btn btn-dark">
-				Add review
-			</button>
+			<textarea name="Comment" class="review-textarea" placeholder="Write your review here..." required></textarea>
+			<button type="submit" class="btn btn-dark">Add review</button>
 		</form>
+	</div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content delete-modal">
+			<h5 class="modal-title modal-header">Delete movie</h5>
+			<div class="modal-body">
+				<p>Are you sure you want to delete <strong class="movie-name">@Model.Title</strong>?</p>
+				<span class="warning-text">This action cannot be undone.</span>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancel</button>
+				<form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post">
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>
