@@ -2,6 +2,10 @@
 	<link rel="stylesheet" href="~/css/movies-details.css" />
 }
 
+@{
+	ViewData["Title"] = Model.Title;
+}
+
 <div class="movie-details-container">
 	<div class="movie-header">
 		<h1 class="movie-title">@Model.Title</h1>
