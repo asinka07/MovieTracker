@@ -1,0 +1,24 @@
+﻿.custom-navbar {
+    background-color: #111827 !important;
+    font: Poppins;
+}
+
+.navbar-brand {
+    font-family: fantasy;
+    margin-right: 10px;
+    font-size: x-large;
+}
+
+.custom-navbar > .container-fluid > .navbar-brand {
+    color: #E5E7EB !important;
+    font-weight: lighter;
+}
+
+.custom-navbar .navbar-nav .nav-link {
+    color: #E5E7EB !important;
+    transition: color 0.2s ease;
+}
+
+    .custom-navbar .navbar-nav .nav-link:hover {
+        color: #FBBF24 !important;
+    }
