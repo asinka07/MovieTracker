@@ -2,7 +2,7 @@
 
 namespace MovieTracker.Models
 {
-    public class Genre
+    public class GenreViewModel
     {
         public int Id { get; set; }
 
@@ -10,6 +10,6 @@ namespace MovieTracker.Models
         [StringLength(100, ErrorMessage = "Genre cannot be more than 100 symbols")]
         public string Name { get; set; }
 
-        public ICollection<Movie> Movies { get; set; }
+        public ICollection<MovieViewModel> Movies { get; set; }
     }
 }

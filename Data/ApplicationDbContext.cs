@@ -8,9 +8,9 @@ namespace MovieTracker.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
         { }
 
-        public DbSet<Movie> Movies { get; set; }
-        public DbSet<Genre> Genres { get; set; }
-        public DbSet<Review> Reviews { get; set; }
+        public DbSet<MovieViewModel> Movies { get; set; }
+        public DbSet<GenreViewModel> Genres { get; set; }
+        public DbSet<ReviewViewModel> Reviews { get; set; }
 
     }
 }

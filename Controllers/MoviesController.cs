@@ -36,10 +36,11 @@ namespace MovieTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Movie movie)
+        public async Task<IActionResult> Create(MovieViewModel movie)
         {
             if (ModelState.IsValid)
             {
+                movie.Published = DateTime.Now;
                 _dbcontext.Add(movie);
                 await _dbcontext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -61,7 +62,7 @@ namespace MovieTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, Movie movie)
+        public async Task<IActionResult> Edit(int id, MovieViewModel movie)
         {
             if (id != movie.Id) return NotFound();
 

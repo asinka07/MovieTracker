@@ -2,13 +2,13 @@
 
 namespace MovieTracker.Models
 {
-    public class Review
+    public class ReviewViewModel
     {
         public int Id { get; set; }
 
         [Required]
         public int MovieId {  get; set; }
-        public Movie Movie { get; set; }
+        public MovieViewModel Movie { get; set; }
 
         [Required(ErrorMessage = "Please, type a comment!")]
         [StringLength(300, ErrorMessage = "Comment length can be maximum 300 characters.")]

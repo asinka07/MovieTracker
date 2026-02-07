@@ -2,7 +2,7 @@
 
 namespace MovieTracker.Models
 {
-    public class Movie
+    public class MovieViewModel
     {
         public int Id { get; set; }
 
@@ -13,7 +13,7 @@ namespace MovieTracker.Models
 
         [Required]
         public int GenreId { get; set; }
-        public Genre Genre { get; set; }
+        public GenreViewModel Genre { get; set; }
 
         [Required]
         public DateTime Published { get; set; }
@@ -21,6 +21,6 @@ namespace MovieTracker.Models
         [StringLength(500, ErrorMessage = "The description is too long. Max length - 500 characters")]
         public string Description {  get; set; }
 
-        public ICollection<Review> Reviews { get; set; }
+        public ICollection<ReviewViewModel> Reviews { get; set; }
     }
 }
