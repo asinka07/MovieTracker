@@ -1,0 +1,66 @@
+﻿@section Styles {
+	<link rel="stylesheet" href="~/css/movies-details.css" />
+}
+
+<div class="movie-details-container">
+	<div class="movie-header">
+		<h1 class="movie-title">@Model.Title</h1>
+		<div class="movie-buttons">
+			<a asp-action="Index" class="btn btn-dark">← Back</a>
+			<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-light">Edit</a>
+			<form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post" style="display:inline-block;">
+				<button type="submit" class="btn btn-danger">Delete</button>
+			</form>
+		</div>
+	</div>
+
+	<div class="movie-info">
+		@if (!string.IsNullOrEmpty(Model.Description))
+		{
+			<div class="movie-description">
+				<h5>Description</h5>
+				<p>@Model.Description</p>
+			</div>
+		}
+
+		<div class="movie-det">
+			<p><strong>Genre:</strong> @Model.Genre?.Name</p>
+			<p><strong>Published:</strong> @Model.Published.ToString("dd/MM/yyyy")</p>
+		</div>
+	</div>
+
+	<div class="reviews-section">
+		<h4>Reviews</h4>
+
+		<div class="reviews-list-wrapper">
+			<ul class="reviews-list">
+				@if (Model.Reviews != null && Model.Reviews.Count > 0)
+				{
+					@foreach (var review in Model.Reviews)
+					{
+						<li class="review-item">
+							@review.Comment
+						</li>
+					}
+				}
+				else
+				{
+					<li class="no-comment">No comments yet - be the first</li>
+				}
+			</ul>
+		</div>
+
+		<form class="review-form" asp-action="AddReview" method="post">
+			<input type="hidden" name="MovieId" value="@Model.Id" />
+
+			<textarea name="Comment"
+					  class="review-textarea"
+					  placeholder="Write your review here..."
+					  required></textarea>
+
+			<button type="submit" class="btn btn-dark">
+				Add review
+			</button>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,129 @@
+﻿.movie-details-container {
+    margin: 40px auto;
+    max-width: 850px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.movie-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 15px;
+}
+
+.movie-title {
+    color: #FBBF24;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin: 0;
+    word-break: break-word;
+}
+
+.movie-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.movie-info {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.movie-description {
+    flex: 0 0 65%;
+}
+
+    .movie-description h5 {
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .movie-description p {
+        line-height: 1.7;
+    }
+
+.movie-det {
+    flex: 0 0 30%;
+}
+
+    .movie-det p {
+        margin: 0 0 10px 0;
+        font-size: 1rem;
+    }
+
+.reviews-section {
+    margin-top: 10px;
+    padding: 40px;
+    border-radius: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+.reviews-list-wrapper {
+    margin-top: 10px;
+    max-height: 190px;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+    .reviews-list-wrapper::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .reviews-list-wrapper::-webkit-scrollbar-thumb {
+        background-color: #374151;
+        border-radius: 3px;
+    }
+
+.reviews-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.review-item {
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    line-height: 1.6;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+
+.no-comment {
+    color: rgba(255, 255, 255, 0.5);
+    padding: 30px;
+    text-align: center;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.review-textarea {
+    resize: none;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #374151;
+    color: #E5E7EB;
+    font-size: 0.95rem;
+}
+
+    .review-textarea::placeholder {
+        color: #9CA3AF;
+    }
+
+    .review-textarea:focus {
+        outline: none;
+        border-color: #3B82F6;
+    }
