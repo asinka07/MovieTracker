@@ -1,21 +1,29 @@
 ﻿@model IEnumerable<MovieTracker.Models.Movie>
 @section Styles {
-    <link rel="stylesheet" href="~/css/movies.css" />
+	<link rel="stylesheet" href="~/css/movies.css" />
 }
-    
+
 @{
-    ViewData["Title"] = "Movies";
+	ViewData["Title"] = "Movies";
 }
 
 <h1 class="mb-5">Movies</h1>
 
-<a asp-action="Create" class="btn btn-dark mb-4">
-    + Add Movie
-</a>
 
-<div class="movies-grid">
-    @foreach (var movie in Model)
-    {
-        @await Html.PartialAsync("_MoviePartialView", movie)
-    }
-</div>
+@if (!Model.Any())
+{
+	<p>There is no added movies.</p>
+	<a asp-controller="Movies" asp-action="Create">Add the first movie from here</a>
+}
+else
+{
+	<a asp-action="Create" class="btn btn-dark mb-4">
+		+ Add Movie
+	</a>
+	<div class="movies-grid">
+		@foreach (var movie in Model)
+		{
+			@await Html.PartialAsync("_MoviePartialView", movie)
+		}
+	</div>
+}
