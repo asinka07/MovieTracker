@@ -22,7 +22,7 @@ namespace MovieTracker.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MovieTracker.Models.Genre", b =>
+            modelBuilder.Entity("MovieTracker.Models.Entities.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,7 @@ namespace MovieTracker.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("MovieTracker.Models.Movie", b =>
+            modelBuilder.Entity("MovieTracker.Models.Entities.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,8 +61,8 @@ namespace MovieTracker.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -71,7 +71,7 @@ namespace MovieTracker.Migrations
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("MovieTracker.Models.Review", b =>
+            modelBuilder.Entity("MovieTracker.Models.Entities.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,9 +94,9 @@ namespace MovieTracker.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("MovieTracker.Models.Movie", b =>
+            modelBuilder.Entity("MovieTracker.Models.Entities.Movie", b =>
                 {
-                    b.HasOne("MovieTracker.Models.Genre", "Genre")
+                    b.HasOne("MovieTracker.Models.Entities.Genre", "Genre")
                         .WithMany("Movies")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -105,9 +105,9 @@ namespace MovieTracker.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("MovieTracker.Models.Review", b =>
+            modelBuilder.Entity("MovieTracker.Models.Entities.Review", b =>
                 {
-                    b.HasOne("MovieTracker.Models.Movie", "Movie")
+                    b.HasOne("MovieTracker.Models.Entities.Movie", "Movie")
                         .WithMany("Reviews")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -116,12 +116,12 @@ namespace MovieTracker.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("MovieTracker.Models.Genre", b =>
+            modelBuilder.Entity("MovieTracker.Models.Entities.Genre", b =>
                 {
                     b.Navigation("Movies");
                 });
 
-            modelBuilder.Entity("MovieTracker.Models.Movie", b =>
+            modelBuilder.Entity("MovieTracker.Models.Entities.Movie", b =>
                 {
                     b.Navigation("Reviews");
                 });

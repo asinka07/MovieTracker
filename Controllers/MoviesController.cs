@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieTracker.Data;
-using MovieTracker.Models;
+using MovieTracker.Models.Entities;
 
 namespace MovieTracker.Controllers
 {
@@ -36,13 +36,15 @@ namespace MovieTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(MovieViewModel movie)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Movie movie)
         {
             if (ModelState.IsValid)
             {
                 movie.Published = DateTime.Now;
                 _dbcontext.Add(movie);
                 await _dbcontext.SaveChangesAsync();
+                TempData["SuccessMessage"] = $"Movie \"{movie.Title}\" added successfully!";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GenreId"] = new SelectList(_dbcontext.Genres, "Id", "Name", movie.GenreId);
@@ -62,7 +64,7 @@ namespace MovieTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, MovieViewModel movie)
+        public async Task<IActionResult> Edit(int id, Movie movie)
         {
             if (id != movie.Id) return NotFound();
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MovieTracker.Models.MovieViewModel>
+﻿@model IEnumerable<MovieTracker.Models.Entities.Movie>
 @section Styles {
 	<link rel="stylesheet" href="~/css/movies.css" />
 }
@@ -26,4 +26,15 @@ else
 			@await Html.PartialAsync("_MoviePartialView", movie)
 		}
 	</div>
+}
+
+@section Scripts {
+	<script>
+		$(document).ready(function() {
+			var message = '@TempData["SuccessMessage"]';
+			if (message) {
+				toastr.success(message);
+			}
+		});
+	</script>
 }
