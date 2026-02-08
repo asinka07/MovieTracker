@@ -72,7 +72,7 @@ namespace MovieTracker.Controllers
             {
                 _dbcontext.Update(movie);
                 await _dbcontext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = movie.Id });
             }
             ViewData["GenreId"] = new SelectList(_dbcontext.Genres, "Id", "Name", movie.GenreId);
             return View(movie);
