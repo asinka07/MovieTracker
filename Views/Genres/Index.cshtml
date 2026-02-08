@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MovieTracker.Models.Entities.Genre>
+@section Styles {
+	<link rel="stylesheet" href="~/css/genres.css" />
+}
+
+@{
+	ViewData["Title"] = "Genres";
+}
+
+<h1 class="mb-5">Movies</h1>
+
+
+@if (!Model.Any())
+{
+	<p>There is no added genres.</p>
+	<a asp-controller="Genres" asp-action="Create">Add the first genre from here</a>
+}
+else
+{
+	<a asp-action="Create" class="btn btn-dark mb-4">
+		+ Add Genre
+	</a>
+	<div>
+		@foreach (var genre in Model)
+		{
+			<span class="genre-pill">@genre.Name</span>
+		}
+	</div>
+}
+
