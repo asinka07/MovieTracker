@@ -93,5 +93,18 @@ namespace MovieTracker.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        public async Task<IActionResult> AddReview(int MovieId, string Comment)
+        {
+            if (!string.IsNullOrWhiteSpace(Comment))
+            { 
+            _dbcontext.Reviews.Add(new Review { MovieId = MovieId, Comment = Comment });
+            await _dbcontext.SaveChangesAsync();
+            }
+
+            TempData["SuccessMessage"] = "Your review is published!";
+            return RedirectToAction("Details", new { id = MovieId });
+        }
     }
+
 }
