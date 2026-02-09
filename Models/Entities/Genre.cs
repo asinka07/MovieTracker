@@ -10,6 +10,6 @@ namespace MovieTracker.Models.Entities
         [StringLength(100, ErrorMessage = "Genre cannot be more than 100 symbols")]
         public string Name { get; set; }
 
-        public ICollection<Movie> Movies { get; set; }
+        public ICollection<Movie>? Movies { get; set; }
     }
 }

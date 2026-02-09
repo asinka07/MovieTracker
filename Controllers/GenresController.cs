@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using MovieTracker.Data;
 using MovieTracker.Models.Entities;
 
@@ -18,6 +19,31 @@ namespace MovieTracker.Controllers
         {
             var genres = await _dbcontext.Genres.ToListAsync();
             return View(genres);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Genre genre)
+        {
+            bool genreExists = await _dbcontext.Genres.AnyAsync(g => g.Name.ToLower() == genre.Name.ToLower());
+
+            if (genreExists)
+            {
+                ModelState.AddModelError("Name", "This genre already exists.");
+            }
+            if (ModelState.IsValid)
+            {
+                _dbcontext.Add(genre);
+                await _dbcontext.SaveChangesAsync();
+                TempData["SuccessMessage"] = $"\"{genre.Name}\" added successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(genre);
         }
     }
 }

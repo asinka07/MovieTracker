@@ -11,3 +11,26 @@
     .genre-pill:hover {
         background-color: #10b981;
     }
+
+h6 {
+    margin-bottom: 12px;
+    color: #FFF;
+}
+
+.my-btn {
+    align-self: flex-end;
+    position: relative;
+    color: #fbe524;
+    top: 3px;
+    right: 5px;
+}
+
+.btn-dark {
+    background: gray;
+    border: gray;
+}
+
+    .btn-dark:hover {
+        background: darkgrey;
+        border: gray;
+    }
