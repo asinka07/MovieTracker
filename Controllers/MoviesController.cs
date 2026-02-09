@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieTracker.Data;
 using MovieTracker.Models.Entities;
+using MovieTracker.Models.ViewModels.Movies;
 
 namespace MovieTracker.Controllers
 {
@@ -14,17 +15,36 @@ namespace MovieTracker.Controllers
             this._dbcontext = dbcontext;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? genreId, string sortedMovies)
         {
-            var movies = await _dbcontext.Movies.Include(m => m.Genre).Include(m => m.Reviews).ToListAsync();
-            return View(movies);
+            var movies = _dbcontext.Movies.Include(m => m.Genre).AsQueryable();
+            if (genreId.HasValue)
+            {
+                movies = movies.Where(m => m.GenreId == genreId);
+            }
+
+            movies = sortedMovies == "date_desc" ? movies.OrderByDescending(m => m.Published) : movies.OrderBy(m => m.Published);
+
+            var viewModel = new MovieIndexViewModel
+            {
+                Movies = await movies.ToListAsync(),
+                GenreId = genreId,
+                SortedMovies = sortedMovies,
+                Genres = await _dbcontext.Genres.Select(g => new SelectListItem{Value = g.Id.ToString(), Text = g.Name}).ToListAsync()
+            };
+
+            return View(viewModel);
+
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, int? genreId, string sortedMovies)
         {
             if (id == null) { return NotFound(); }
             var movie = await _dbcontext.Movies.Include(m => m.Genre).Include(m => m.Reviews).FirstOrDefaultAsync(m => m.Id == id);
             if (movie == null) { return NotFound(); }
+
+            ViewData["GenreId"] = genreId;
+            ViewData["SortedMovies"] = sortedMovies;
 
             return View(movie);
         }
@@ -94,7 +114,7 @@ namespace MovieTracker.Controllers
         }
 
 
-        public async Task<IActionResult> AddReview(int MovieId, string Comment)
+        public async Task<IActionResult> AddReview(int MovieId, string Comment, int? genreId, string sortedMovies)
         {
             if (!string.IsNullOrWhiteSpace(Comment))
             { 
@@ -103,7 +123,7 @@ namespace MovieTracker.Controllers
             }
 
             TempData["SuccessMessage"] = "Your review is published!";
-            return RedirectToAction("Details", new { id = MovieId });
+            return RedirectToAction("Details", new { id = MovieId, genreId, sortedMovies });
         }
     }
 
