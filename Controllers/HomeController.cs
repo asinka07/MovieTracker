@@ -1,15 +1,32 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MovieTracker.Data;
 using MovieTracker.Models;
+using MovieTracker.Models.ViewModels.Home;
 using System.Diagnostics;
 
 namespace MovieTracker.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _dbcontext;
+
+        public HomeController(ApplicationDbContext dbcontext)
         {
-            return View();
+            _dbcontext = dbcontext;
         }
+
+        public async Task<IActionResult> Index()
+        {
+            var model = new HomeViewModel
+            {
+                LatestMovies = await _dbcontext.Movies.Include(m => m.Genre).OrderByDescending(m => m.Published).Take(5).ToListAsync(),
+                TopGenres = await _dbcontext.Genres.Include(g => g.Movies).OrderByDescending(g => g.Movies.Count).Take(5).ToListAsync()
+            };
+
+            return View(model);
+        }
+
 
         public IActionResult Privacy()
         {

@@ -49,6 +49,14 @@ namespace MovieTracker.Controllers
             return View(movie);
         }
 
+        public async Task<IActionResult> DetailsModal(int id)
+        {
+            var movie = await _dbcontext.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == id);
+            if (movie == null)
+                return NotFound();
+            return PartialView("~/Views/Shared/_MovieDetailsPartialView.cshtml", movie);
+        }
+
         public IActionResult Create()
         {
             ViewData["GenreId"] = new SelectList(_dbcontext.Genres, "Id", "Name");

@@ -1,8 +1,95 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model MovieTracker.Models.ViewModels.Home.HomeViewModel
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" />
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="home-header">
+    <h1>MovieTracker</h1>
+    <h3>Your Movie Space</h3>
+
+    <div class="home-buttons">
+        <a asp-controller="Movies" asp-action="Index" class="btn btn-dark">Browse Movies</a>
+        <a asp-controller="Genres" asp-action="Index" class="btn btn-outline-dark">Genres</a>
+    </div>
 </div>
+
+<div class="home-section">
+    <p>Add titles you love. Update descriptions when you want to improve them. Remove movies that no longer feel relevant.</p>
+    <p>No accounts. No limits. Just a shared place where anyone can contribute.</p>
+    <p>Pick a genre from the dropdown when adding a movie — and if it doesn’t exist yet, create it.</p>
+    <p>Build the collection. Explore it. Find something to watch whenever the mood hits.</p>
+</div>
+
+<div class="home-section">
+    <h2>Latest Published Movies</h2>
+
+    @if (!Model.LatestMovies.Any())
+    {
+        <p>No movies added yet.</p>
+    }
+    else
+    {
+        <div class="movies-grid">
+            @foreach (var movie in Model.LatestMovies)
+            {
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <span class="poster-icon">&#127916;</span>
+                    </div>
+                    <div class="movie-content">
+                        <h5>@movie.Title</h5>
+                        <span class="genre-badge">@movie.Genre?.Name</span>
+                        <a href="@Url.Action("DetailsModal", "Movies", new { id = movie.Id })" class="details-btn open-modal">View Details</a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<div class="home-section">
+    <h2>&#127942; Top Genres – Genres with Most Movies</h2>
+    <div class="genres-ranking">
+        @for (int i = 0; i < Model.TopGenres.Count; i++)
+        {
+            var genre = Model.TopGenres[i];
+            <span class="genre-rank">
+                <span class="rank-icon">
+                    @(i == 0 ? Html.Raw("&#x1F947;") : i == 1 ? Html.Raw("&#129352;") : i == 2 ? Html.Raw("&#129353;") : Html.Raw("&#127916;"))
+                </span>
+                <a asp-controller="Movies" asp-action="Index" asp-route-genreId="@genre.Id" class="genre-tag"> @genre.Name <span class="genre-count">@genre.Movies.Count</span></a>
+            </span>
+        }
+    </div>
+</div>
+<div class="modal fade" id="movieModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content p-3" id="movieModalContent">
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".open-modal").forEach(button => {
+                button.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute("href");
+                    fetch(url)
+                        .then(res => res.text())
+                        .then(html => {
+                            const modalContent = document.getElementById("movieModalContent");
+                            modalContent.innerHTML = html;
+                            const modalEl = document.getElementById("movieModal");
+                            const modal = new bootstrap.Modal(modalEl);
+                            modal.show();
+                        });
+                });
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,19 @@
+﻿@model MovieTracker.Models.Entities.Movie
+
+<div class="movie-modal-body d-flex flex-column flex-md-row gap-4 p-4">
+    <button type="button" class="btn-close" style="right: 25px; position: absolute;" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="poster-area flex-shrink-0">
+        <div class="movie-modal-poster rounded-3 d-flex align-items-center justify-content-center">
+            <span class="poster-icon">&#127916;</span>
+        </div>
+    </div>
+    <div class="movie-modal-info flex-grow-1">
+        <h4 class="mb-2" style="margin-right: 30px;">@Model.Title</h4>
+        <p><strong>Genre:</strong> @Model.Genre?.Name</p>
+        <p><strong>Published:</strong> @Model.Published.ToString("dd MMM yyyy")</p>
+
+        <hr />
+        <p><strong>Description:</strong> @Model.Description</p>
+
+    </div>
+</div>
