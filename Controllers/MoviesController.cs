@@ -87,13 +87,16 @@ namespace MovieTracker.Controllers
         public async Task<IActionResult> Edit(int id, Movie movie)
         {
             if (id != movie.Id) return NotFound();
-
             if (ModelState.IsValid)
             {
-                _dbcontext.Update(movie);
+                var originalMovie = await _dbcontext.Movies.FindAsync(id);
+                if (originalMovie == null) return NotFound();
+                originalMovie.Title = movie.Title;
+                originalMovie.Description = movie.Description;
+                originalMovie.GenreId = movie.GenreId;
                 await _dbcontext.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Movie \"{movie.Title}\" updated successfully!";
-                return RedirectToAction("Details", new { id = movie.Id });
+                TempData["SuccessMessage"] = $"Movie \"{originalMovie.Title}\" updated successfully!";
+                return RedirectToAction("Details", new { id = originalMovie.Id });
             }
             ViewData["GenreId"] = new SelectList(_dbcontext.Genres, "Id", "Name", movie.GenreId);
             return View(movie);
