@@ -72,7 +72,7 @@ The platform helps users discover what to watch by displaying the latest publish
 1. Clone the repository:  
 
    ```bash 
-   git clone <repository-url>
+   git clone https://github.com/asinka07/MovieTracker.git
    ```
 2. Open the solution file in Visual Studio 2026 Insiders.
 3. Configure the connection string in appsettings.json if needed.
