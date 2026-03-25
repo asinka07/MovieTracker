@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MovieTracker.Data.Models;
 using MovieTracker.Data;
-using MovieTracker.Models;
-using MovieTracker.Models.ViewModels.Home;
+using MovieTracker.ViewModels.Movies;
 using System.Diagnostics;
+using MovieTracker.ViewModels.Home;
 
 namespace MovieTracker.Controllers
 {

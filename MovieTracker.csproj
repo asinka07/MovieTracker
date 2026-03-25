@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -13,6 +13,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MovieTracker.Data.Models\MovieTracker.Data.Models.csproj" />
+    <ProjectReference Include="..\MovieTracker.Data\MovieTracker.Data.csproj" />
+    <ProjectReference Include="..\MovieTracker.Services.Core\MovieTracker.Services.Core.csproj" />
+    <ProjectReference Include="..\MovieTracker.ViewModels\MovieTracker.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

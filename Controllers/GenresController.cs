@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using MovieTracker.Data.Models;
 using MovieTracker.Data;
-using MovieTracker.Models.Entities;
 
 namespace MovieTracker.Controllers
 {

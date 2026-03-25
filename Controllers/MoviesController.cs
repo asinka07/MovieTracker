@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieTracker.Data;
-using MovieTracker.Models.Entities;
+using MovieTracker.Data.Models;
 using MovieTracker.Models.ViewModels.Movies;
 
 namespace MovieTracker.Controllers
@@ -128,8 +128,8 @@ namespace MovieTracker.Controllers
         public async Task<IActionResult> AddReview(int MovieId, string Comment, int? genreId, string sortedMovies)
         {
             if (!string.IsNullOrWhiteSpace(Comment))
-            { 
-            _dbcontext.Reviews.Add(new Review { MovieId = MovieId, Comment = Comment });
+            {
+                _dbcontext.Reviews.Add(new Review { MovieId = MovieId, Comment = Comment });
             await _dbcontext.SaveChangesAsync();
             }
 
