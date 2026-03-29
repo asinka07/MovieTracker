@@ -16,9 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MovieTracker.Data.Models\MovieTracker.Data.Models.csproj" />
     <ProjectReference Include="..\MovieTracker.Data\MovieTracker.Data.csproj" />
-    <ProjectReference Include="..\MovieTracker.Services.Core\MovieTracker.Services.Core.csproj" />
+    <ProjectReference Include="..\MovieTracker.Services\MovieTracker.Services.csproj" />
     <ProjectReference Include="..\MovieTracker.ViewModels\MovieTracker.ViewModels.csproj" />
   </ItemGroup>
 

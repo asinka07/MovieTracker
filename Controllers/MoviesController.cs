@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieTracker.Data;
 using MovieTracker.Data.Models;
-using MovieTracker.Models.ViewModels.Movies;
+using MovieTracker.ViewModels.Movies;
 
 namespace MovieTracker.Controllers
 {

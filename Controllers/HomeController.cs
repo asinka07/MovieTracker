@@ -4,6 +4,7 @@ using MovieTracker.Data.Models;
 using MovieTracker.Data;
 using MovieTracker.ViewModels.Movies;
 using System.Diagnostics;
+using MovieTracker.ViewModels;
 using MovieTracker.ViewModels.Home;
 
 namespace MovieTracker.Controllers

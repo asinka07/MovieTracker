@@ -1,14 +1,14 @@
 <Solution>
   <Folder Name="/Data/">
-    <Project Path="../MovieTracker.Data.Models/MovieTracker.Data.Models.csproj" Id="d21a80d3-cc1e-4e5f-8cde-efcfab501eed" />
-    <Project Path="../MovieTracker.Data/MovieTracker.Data.csproj" Id="fdd67220-2cc4-40a3-913b-d2c2e097a239" />
+    <Project Path="../MovieTracker.Data.Models/MovieTracker.Data.Models.csproj" Id="27543cf3-8ed4-4d7a-8596-3820f8c7ffbb" />
+    <Project Path="../MovieTracker.Data/MovieTracker.Data.csproj" Id="ce38ed68-66ba-408b-b375-fdbd90fbea3a" />
   </Folder>
   <Folder Name="/Services/">
-    <Project Path="../MovieTracker.Services.Core/MovieTracker.Services.Core.csproj" Id="5fdaa00b-e611-41f0-92e8-adfe2ac04e3e" />
+    <Project Path="../MovieTracker.Services/MovieTracker.Services.csproj" Id="097d1fec-f0fc-4ee0-bc6c-57b2cccaa996" />
   </Folder>
   <Folder Name="/Web/">
-    <Project Path="../MovieTracker.ViewModels/MovieTracker.ViewModels.csproj" Id="e8c21d05-bc6b-40b9-b890-0eb0b3d312db" />
+    <Project Path="../MovieTracker.ViewModels/MovieTracker.ViewModels.csproj" Id="0363bc3d-a6fa-43c8-8168-295e73d73cd8" />
     <Project Path="MovieTracker.csproj" />
   </Folder>
-  <Project Path="../MovieTracker.GCommon/MovieTracker.GCommon.csproj" Id="9b0fcd46-e1e3-446f-ad8d-dd4525e1be64" />
+  <Project Path="../MovieTracker.GCommon/MovieTracker.GCommon.csproj" Id="0905c4b9-e5cc-43ce-8764-90e44bd70125" />
 </Solution>
