@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static MovieTracker.GCommon.EntityValidations;
 
 namespace MovieTracker.Data.Models
 {
@@ -7,7 +8,7 @@ namespace MovieTracker.Data.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Please, type genre name!")]
-        [StringLength(100, ErrorMessage = "Genre cannot be more than 100 symbols")]
+        [StringLength(GenreNameMaxLength, ErrorMessage = "Genre cannot be more than 100 symbols")]
         public string Name { get; set; }
 
         public ICollection<Movie>? Movies { get; set; }
