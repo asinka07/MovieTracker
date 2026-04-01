@@ -1,5 +1,7 @@
-using MovieTracker.Data;
 using Microsoft.EntityFrameworkCore;
+using MovieTracker.Data;
+using MovieTracker.Services;
+using MovieTracker.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IMovieService, MovieService>();
 
 var app = builder.Build();
 

@@ -7,12 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MovieTracker.Data.Models\MovieTracker.Data.Models.csproj" />
     <ProjectReference Include="..\MovieTracker.Data\MovieTracker.Data.csproj" />
+    <ProjectReference Include="..\MovieTracker.ViewModels\MovieTracker.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
