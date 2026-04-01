@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieTracker.Data;
 using MovieTracker.Data.Models;
+using MovieTracker.ViewModels.Home;
 using MovieTracker.ViewModels.Movies;
+using MovieTracker.ViewModels.Review;
 
 namespace MovieTracker.Controllers
 {
@@ -17,101 +19,203 @@ namespace MovieTracker.Controllers
 
         public async Task<IActionResult> Index(int? genreId, string sortedMovies)
         {
-            var movies = _dbcontext.Movies.Include(m => m.Genre).AsQueryable();
+            var query = _dbcontext.Movies
+                .Include(m => m.Genre)
+                .AsQueryable();
+
             if (genreId.HasValue)
             {
-                movies = movies.Where(m => m.GenreId == genreId);
+                query = query.Where(m => m.GenreId == genreId);
             }
 
-            movies = sortedMovies == "date_desc" ? movies.OrderByDescending(m => m.Published) : movies.OrderBy(m => m.Published);
+            query = sortedMovies == "date_desc"
+                ? query.OrderByDescending(m => m.Published)
+                : query.OrderBy(m => m.Published);
+
+            var movies = await query
+                .Select(m => new MoviePartialViewModel
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    GenreName = m.Genre.Name,
+                    Published = m.Published,
+                    GenreId = m.GenreId,
+                    SortedMovies = sortedMovies
+                })
+                .ToListAsync();
 
             var viewModel = new MovieIndexViewModel
             {
-                Movies = await movies.ToListAsync(),
+                Movies = movies,
                 GenreId = genreId,
                 SortedMovies = sortedMovies,
-                Genres = await _dbcontext.Genres.Select(g => new SelectListItem{Value = g.Id.ToString(), Text = g.Name}).ToListAsync()
+                Genres = await _dbcontext.Genres
+                    .Select(g => new SelectListItem
+                    {
+                        Value = g.Id.ToString(),
+                        Text = g.Name
+                    })
+                    .ToListAsync()
             };
 
             return View(viewModel);
-
         }
 
         public async Task<IActionResult> Details(int? id, int? genreId, string sortedMovies)
         {
-            if (id == null) { return NotFound(); }
-            var movie = await _dbcontext.Movies.Include(m => m.Genre).Include(m => m.Reviews).FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null) { return NotFound(); }
+            if (id == null) return NotFound();
+
+            var movie = await _dbcontext.Movies
+                .Include(m => m.Genre)
+                .Include(m => m.Reviews)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (movie == null) return NotFound();
+
+            var viewModel = new MovieFullDetailsViewModel
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                GenreName = movie.Genre.Name,
+                Description = movie.Description,
+                Published = movie.Published,
+                Reviews = movie.Reviews
+                    .Select(r => new ReviewViewModel
+                    {
+                        Comment = r.Comment
+                    })
+                    .ToList()
+            };
 
             ViewData["GenreId"] = genreId;
             ViewData["SortedMovies"] = sortedMovies;
 
-            return View(movie);
+            return View(viewModel);
         }
 
         public async Task<IActionResult> DetailsModal(int id)
         {
             var movie = await _dbcontext.Movies.Include(m => m.Genre).FirstOrDefaultAsync(m => m.Id == id);
+
             if (movie == null)
                 return NotFound();
-            return PartialView("~/Views/Shared/_MovieDetailsPartialView.cshtml", movie);
+
+            var model = new MovieDetailsModalViewModel
+            {
+                Title = movie.Title,
+                GenreName = movie.Genre.Name,
+                Published = movie.Published,
+                Description = movie.Description
+            };
+
+            return PartialView("_MovieDetailsPartialView", model);
         }
 
         public IActionResult Create()
         {
-            ViewData["GenreId"] = new SelectList(_dbcontext.Genres, "Id", "Name");
-            return View();
+            var viewModel = new CreateEditMovieViewModel
+            {
+                Genres = _dbcontext.Genres
+                    .Select(g => new SelectListItem
+                    {
+                        Value = g.Id.ToString(),
+                        Text = g.Name
+                    })
+                    .ToList()
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Movie movie)
+        public async Task<IActionResult> Create(CreateEditMovieViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                movie.Published = DateTime.Now;
-                _dbcontext.Add(movie);
-                await _dbcontext.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Movie \"{movie.Title}\" added successfully!";
-                return RedirectToAction(nameof(Index));
+                model.Genres = _dbcontext.Genres
+                    .Select(g => new SelectListItem
+                    {
+                        Value = g.Id.ToString(),
+                        Text = g.Name
+                    })
+                    .ToList();
+
+                return View(model);
             }
-            ViewData["GenreId"] = new SelectList(_dbcontext.Genres, "Id", "Name", movie.GenreId);
-            return View(movie);
+
+            var movie = new Movie
+            {
+                Title = model.Title,
+                Description = model.Description,
+                GenreId = model.GenreId,
+                Published = DateTime.Now
+            };
+
+            _dbcontext.Add(movie);
+            await _dbcontext.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = $"Movie \"{movie.Title}\" added successfully!";
+            return RedirectToAction(nameof(Index));
         }
 
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null) return NotFound();
-
             var movie = await _dbcontext.Movies.FindAsync(id);
             if (movie == null) return NotFound();
 
-            ViewData["GenreId"] = new SelectList(_dbcontext.Genres, "Id", "Name", movie.GenreId);
-            return View(movie);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(int id, Movie movie)
-        {
-            if (id != movie.Id) return NotFound();
-            if (ModelState.IsValid)
+            var viewModel = new CreateEditMovieViewModel
             {
-                var originalMovie = await _dbcontext.Movies.FindAsync(id);
-                if (originalMovie == null) return NotFound();
-                originalMovie.Title = movie.Title;
-                originalMovie.Description = movie.Description;
-                originalMovie.GenreId = movie.GenreId;
-                await _dbcontext.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Movie \"{originalMovie.Title}\" updated successfully!";
-                return RedirectToAction("Details", new { id = originalMovie.Id });
+                Id = movie.Id,
+                Title = movie.Title,
+                Description = movie.Description,
+                GenreId = movie.GenreId,
+                Genres = _dbcontext.Genres
+                    .Select(g => new SelectListItem
+                    {
+                        Value = g.Id.ToString(),
+                        Text = g.Name
+                    })
+                    .ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(CreateEditMovieViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Genres = _dbcontext.Genres
+                    .Select(g => new SelectListItem
+                    {
+                        Value = g.Id.ToString(),
+                        Text = g.Name
+                    })
+                    .ToList();
+
+                return View(model);
             }
-            ViewData["GenreId"] = new SelectList(_dbcontext.Genres, "Id", "Name", movie.GenreId);
-            return View(movie);
+
+            var movie = await _dbcontext.Movies.FindAsync(model.Id);
+            if (movie == null) return NotFound();
+
+            movie.Title = model.Title;
+            movie.Description = model.Description;
+            movie.GenreId = model.GenreId;
+
+            await _dbcontext.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = $"Movie \"{movie.Title}\" updated successfully!";
+            return RedirectToAction(nameof(Details), new { id = movie.Id });
         }
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var movie = await _dbcontext.Movies.FindAsync(id);
@@ -125,16 +229,27 @@ namespace MovieTracker.Controllers
         }
 
 
-        public async Task<IActionResult> AddReview(int MovieId, string Comment, int? genreId, string sortedMovies)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddReview(int movieId, string comment, int? genreId, string sortedMovies)
         {
-            if (!string.IsNullOrWhiteSpace(Comment))
+            if (string.IsNullOrWhiteSpace(comment))
             {
-                _dbcontext.Reviews.Add(new Review { MovieId = MovieId, Comment = Comment });
-            await _dbcontext.SaveChangesAsync();
+                return RedirectToAction("Details", new { id = movieId, genreId, sortedMovies });
             }
 
+            var review = new Review
+            {
+                MovieId = movieId,
+                Comment = comment
+            };
+
+            _dbcontext.Reviews.Add(review);
+            await _dbcontext.SaveChangesAsync();
+
             TempData["SuccessMessage"] = "Your review is published!";
-            return RedirectToAction("Details", new { id = MovieId, genreId, sortedMovies });
+
+            return RedirectToAction("Details", new { id = movieId, genreId, sortedMovies });
         }
     }
 

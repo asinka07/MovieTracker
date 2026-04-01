@@ -1,4 +1,4 @@
-﻿@model MovieTracker.Data.Models.Movie
+﻿@model MovieTracker.ViewModels.Movies.MovieDetailsModalViewModel
 
 <div class="movie-modal-body d-flex flex-column flex-md-row gap-4 p-4">
     <button type="button" class="btn-close" style="right: 25px; position: absolute;" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -9,7 +9,7 @@
     </div>
     <div class="movie-modal-info flex-grow-1">
         <h4 class="mb-2" style="margin-right: 30px;">@Model.Title</h4>
-        <p><strong>Genre:</strong> @Model.Genre?.Name</p>
+        <p><strong>Genre:</strong> @Model.GenreName</p>
         <p><strong>Published:</strong> @Model.Published.ToString("dd MMM yyyy")</p>
 
         <hr />

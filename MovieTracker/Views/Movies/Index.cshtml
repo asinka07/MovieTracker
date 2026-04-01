@@ -1,4 +1,5 @@
-﻿@model MovieTracker.ViewModels.Movies.MovieIndexViewModel
+﻿@using MovieTracker.ViewModels.Movies
+@model MovieTracker.ViewModels.Movies.MovieIndexViewModel
 @section Styles {
 	<link rel="stylesheet" href="~/css/movies.css" />
 }
@@ -51,8 +52,16 @@
 		<div class="movies-grid">
 			@foreach (var movie in Model.Movies)
 			{
-			@await Html.PartialAsync("_MoviePartialView", new {Movie = movie, GenreId = Model.GenreId, SortedMovies = Model.SortedMovies})
-			}
+			@await Html.PartialAsync("_MoviePartialView", new MoviePartialViewModel
+			{
+				Id = movie.Id,
+				Title = movie.Title,
+				GenreName = movie.GenreName,
+				Published = movie.Published,
+				GenreId = Model.GenreId,
+				SortedMovies = Model.SortedMovies
+			})
+		}
 		</div>
 	}
 

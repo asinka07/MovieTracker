@@ -1,4 +1,4 @@
-﻿@model MovieTracker.Data.Models.Movie
+﻿@model MovieTracker.ViewModels.Movies.CreateEditMovieViewModel
 @{
 	ViewData["Title"] = "Add Movie";
 }
@@ -14,7 +14,7 @@
 	</div>
 	<div class="mb-3">
 		<label asp-for="GenreId" class="form-label">Genre</label>
-		<select asp-for="GenreId" class="form-select" asp-items="ViewBag.GenreId">
+		<select asp-for="GenreId" class="form-select" asp-items="Model.Genres">
 			<option value="">Select Genre</option>
 		</select>
 		<span asp-validation-for="GenreId" class="text-danger"></span>
