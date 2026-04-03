@@ -117,20 +117,20 @@ You don't need registration to use the app.
   - The last 5 published movies
   - The 5 genres with most movies
 
-![Homepage](wwwroot/images/index.png)
-![Last published movies and genres with most movies](wwwroot/images/index2.png)
+![Homepage](MovieTracker/wwwroot/images/index.png)
+![Last published movies and genres with most movies](MovieTracker/wwwroot/images/index2.png)
 
 - Clicking **View Details** opens a modal showing:
   - Movie title
   - Date of publishing
   - Description
 
-![ViewDetails](wwwroot/images/ViewDetails.png)
+![ViewDetails](MovieTracker/wwwroot/images/ViewDetails.png)
 
 - Clicking a genre redirects to the Movies page with a filter applied.
 
-![ClickGenre](wwwroot/images/ClickGenre.png)
-![FilteredMovies](wwwroot/images/FilteredMovies.png)
+![ClickGenre](MovieTracker/wwwroot/images/ClickGenre.png)
+![FilteredMovies](MovieTracker/wwwroot/images/FilteredMovies.png)
 
 ---
 
@@ -148,9 +148,9 @@ You don't need registration to use the app.
 - The dropdown shows all existing genres. If the genre doesn't exist, you can add it from the **Add Genre** form.
 - After submitting, you are redirected to the Movies page and a success message appears.
 
-![AddMovieButton](wwwroot/images/AddMovieButton.png)
-![AddMovieForm](wwwroot/images/AddMovieForm.png)
-![AddedMovie](wwwroot/images/AddedMovie.png)
+![AddMovieButton](MovieTracker/wwwroot/images/AddMovieButton.png)
+![AddMovieForm](MovieTracker/wwwroot/images/AddMovieForm.png)
+![AddedMovie](MovieTracker/wwwroot/images/AddedMovie.png)
 
 ### Movie Details
 
@@ -160,9 +160,9 @@ You don't need registration to use the app.
   - **Delete** → confirmation pop-up appears
   - **Add Review** → adds a review and shows a success message
 
-![MovieDetails](wwwroot/images/MovieDetails.png)
-![DeleteMoviePopUp](wwwroot/images/DeleteMoviePopUp.png)
-![AddedReview](wwwroot/images/AddedReview.png)
+![MovieDetails](MovieTracker/wwwroot/images/MovieDetails.png)
+![DeleteMoviePopUp](MovieTracker/wwwroot/images/DeleteMoviePopUp.png)
+![AddedReview](MovieTracker/wwwroot/images/AddedReview.png)
 
 ---
 
@@ -172,12 +172,12 @@ You don't need registration to use the app.
 - You cannot delete or edit genres.
 - If no genres exist, movie-related features are disabled.
 
-![Genres](wwwroot/images/Genres.png)
+![Genres](MovieTracker/wwwroot/images/Genres.png)
 
 ### Add Genre
 
 - Click **Add Genre** to open the form.
 - Adding a duplicate genre is not allowed.
 
-![AddGenre](wwwroot/images/AddGenre.png)
-![AddedGenre](wwwroot/images/AddedGenre.png)
+![AddGenre](MovieTracker/wwwroot/images/AddGenre.png)
+![AddedGenre](MovieTracker/wwwroot/images/AddedGenre.png)
