@@ -4,22 +4,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using MovieTracker.Data;
 using MovieTracker.Data.Models;
+using MovieTracker.Services.Interfaces;
 using MovieTracker.ViewModels.Genre;
 
 namespace MovieTracker.Controllers
 {
     public class GenresController : Controller
     {
-        private readonly ApplicationDbContext _dbcontext;
-        public GenresController(ApplicationDbContext dbcontext)
+        private readonly IGenreService _genreService;
+
+        public GenresController(IGenreService genreService)
         {
-            this._dbcontext = dbcontext;
+            _genreService = genreService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var genres = await _dbcontext.Genres.Select(g => new GenreListViewModel{Id = g.Id, Name = g.Name}).ToListAsync();
-
+            var genres = await _genreService.GetAllAsync();
             return View(genres);
         }
 
@@ -32,25 +33,17 @@ namespace MovieTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateGenreViewModel model)
         {
-            bool genreExists = await _dbcontext.Genres
-                .AnyAsync(g => g.Name.ToLower() == model.Name.ToLower());
-
-            if (genreExists)
-            {
-                ModelState.AddModelError("Name", "This genre already exists.");
-            }
-
             if (ModelState.IsValid)
             {
-                var genre = new Genre
+                bool created = await _genreService.CreateAsync(model);
+
+                if (!created)
                 {
-                    Name = model.Name
-                };
+                    ModelState.AddModelError("Name", "This genre already exists.");
+                    return View(model);
+                }
 
-                _dbcontext.Add(genre);
-                await _dbcontext.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = $"\"{genre.Name}\" added successfully!";
+                TempData["SuccessMessage"] = $"\"{model.Name}\" added successfully!";
                 return RedirectToAction(nameof(Index));
             }
 
