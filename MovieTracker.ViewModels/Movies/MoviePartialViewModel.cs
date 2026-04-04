@@ -12,6 +12,7 @@ namespace MovieTracker.ViewModels.Movies
         public DateTime Published { get; set; }
         public int? GenreId { get; set; }
         public string SortedMovies { get; set; }
+        public bool IsApproved { get; set; }  
     }
 
 }

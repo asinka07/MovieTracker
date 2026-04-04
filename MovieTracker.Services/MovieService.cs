@@ -17,11 +17,16 @@ namespace MovieTracker.Services
             _dbContext = dbContext;
         }
 
-        public async Task<MovieIndexViewModel> GetAllAsync(int? genreId, string sortedMovies)
+        public async Task<MovieIndexViewModel> GetAllAsync(int? genreId, string sortedMovies, bool isAdmin)
         {
             var query = _dbContext.Movies
                 .Include(m => m.Genre)
                 .AsQueryable();
+
+            if (!isAdmin)
+            {
+                query = query.Where(m => m.IsApproved);
+            }
 
             if (genreId.HasValue)
                 query = query.Where(m => m.GenreId == genreId);
@@ -38,7 +43,8 @@ namespace MovieTracker.Services
                     GenreName = m.Genre.Name,
                     Published = m.Published,
                     GenreId = m.GenreId,
-                    SortedMovies = sortedMovies
+                    SortedMovies = sortedMovies,
+                    IsApproved = m.IsApproved
                 })
                 .ToListAsync();
 
@@ -131,18 +137,31 @@ namespace MovieTracker.Services
             };
         }
 
-        public async Task CreateAsync(CreateEditMovieViewModel model)
+        public async Task CreateAsync(CreateEditMovieViewModel model, string userId, bool isApproved)
         {
             var movie = new Movie
             {
                 Title = model.Title,
                 Description = model.Description,
                 GenreId = model.GenreId,
-                Published = DateTime.Now
+                Published = DateTime.Now,
+                AddedByUserId = userId,
+                IsApproved = isApproved
             };
 
             _dbContext.Add(movie);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task ApproveMovieAsync(int id)
+        {
+            var movie = await _dbContext.Movies.FindAsync(id);
+
+            if (movie != null)
+            {
+                movie.IsApproved = true;
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task EditAsync(CreateEditMovieViewModel model)

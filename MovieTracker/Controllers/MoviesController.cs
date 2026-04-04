@@ -1,22 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using MovieTracker.Services.Interfaces;
 using MovieTracker.ViewModels.Movies;
-using Microsoft.AspNetCore.Authorization;
 
 namespace MovieTracker.Controllers
 {
     public class MoviesController : Controller
     {
         private readonly IMovieService _movieService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public MoviesController(IMovieService movieService)
+        public MoviesController(IMovieService movieService, UserManager<IdentityUser> userManager)
         {
             _movieService = movieService;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index(int? genreId, string sortedMovies)
         {
-            var viewModel = await _movieService.GetAllAsync(genreId, sortedMovies);
+            bool isAdmin = User.IsInRole("Administrator");
+
+            var viewModel = await _movieService.GetAllAsync(genreId, sortedMovies, isAdmin);
             return View(viewModel);
         }
 
@@ -41,7 +46,6 @@ namespace MovieTracker.Controllers
             return PartialView("_MovieDetailsPartialView", model);
         }
 
-        [Authorize]
         public async Task<IActionResult> Create()
         {
             var viewModel = await _movieService.GetForCreateAsync();
@@ -59,8 +63,21 @@ namespace MovieTracker.Controllers
                 return View(model);
             }
 
-            await _movieService.CreateAsync(model);
+            string userId = _userManager.GetUserId(User);
+            bool isApproved = User.IsInRole("Administrator");
+
+            await _movieService.CreateAsync(model, userId, isApproved);
             TempData["SuccessMessage"] = $"Movie \"{model.Title}\" added successfully!";
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Approve(int movieId)
+        {
+            await _movieService.ApproveMovieAsync(movieId);
+            TempData["SuccessMessage"] = "The movie has been approved!";
             return RedirectToAction(nameof(Index));
         }
 

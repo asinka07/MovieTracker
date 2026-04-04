@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static MovieTracker.GCommon.EntityValidations;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace MovieTracker.Data.Models
@@ -8,6 +9,9 @@ namespace MovieTracker.Data.Models
     {
         public int Id { get; set; }
 
+        public string? AddedByUserId { get; set; }
+        public IdentityUser? AddedByUser { get; set; }
+        public bool IsApproved { get; set; } = false;
 
         [Required(ErrorMessage = "Please, enter a movie title!")]
         [StringLength(MovieTitleMaxLength, ErrorMessage = "Title cannot be more than 100 symbols")]
