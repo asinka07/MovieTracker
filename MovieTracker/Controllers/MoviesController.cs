@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieTracker.Services.Interfaces;
 using MovieTracker.ViewModels.Movies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MovieTracker.Controllers
 {
@@ -40,6 +41,7 @@ namespace MovieTracker.Controllers
             return PartialView("_MovieDetailsPartialView", model);
         }
 
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             var viewModel = await _movieService.GetForCreateAsync();
@@ -62,6 +64,7 @@ namespace MovieTracker.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var viewModel = await _movieService.GetForEditAsync(id);
@@ -87,6 +90,7 @@ namespace MovieTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _movieService.DeleteAsync(id);
@@ -95,6 +99,7 @@ namespace MovieTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> AddReview(int movieId, string comment, int? genreId, string sortedMovies)
         {
             if (!string.IsNullOrWhiteSpace(comment))

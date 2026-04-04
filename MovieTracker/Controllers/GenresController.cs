@@ -6,6 +6,7 @@ using MovieTracker.Data;
 using MovieTracker.Data.Models;
 using MovieTracker.Services.Interfaces;
 using MovieTracker.ViewModels.Genre;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MovieTracker.Controllers
 {
@@ -24,6 +25,7 @@ namespace MovieTracker.Controllers
             return View(genres);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
