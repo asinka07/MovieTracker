@@ -4,76 +4,73 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.LastName" class="form-control" autocomplete="username" aria-required="true" placeholder="Smith" />
-                <label asp-for="Input.LastName" class="form-label text-secondary">Last Name</label>
-                <span asp-validation-for="Input.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.FirstName" class="form-control" autocomplete="username" aria-required="true" placeholder="John" />
-                <label asp-for="Input.FirstName" class="form-label text-secondary">First Name</label>
-                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.UserName" class="form-control" aria-required="true" placeholder="username" />
-                <label asp-for="Input.UserName">Username</label>
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card border-0 shadow-lg" style="background-color: #1f2937; border-radius: 20px; overflow: hidden;">
+                                <div class="card-header py-4 text-center border-0" style="background-color: #111827;">
+                    <h2 class="fw-bold mb-0 text-uppercase" style="color: #f3f4f6; letter-spacing: 2px; font-family: fantasy;">
+                        @ViewData["Title"]
+                    </h2>
+                </div>
+                <div class="card-body p-5">
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <h5 class="fw-normal mb-4 text-center" style="color: lightgray;">Create a new account.</h5>
+                        <div asp-validation-summary="ModelOnly" class="text-danger small mb-3" role="alert"></div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.FirstName" class="form-label small fw-bold text-uppercase" style="color: #fbbf24;">First Name</label>
+                                <input asp-for="Input.FirstName" class="form-control border-0 py-2 px-3 shadow-none"
+                                       style="background-color: #374151; color: #fff; border-radius: 10px;" placeholder="John" />
+                                <span asp-validation-for="Input.FirstName" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.LastName" class="form-label small fw-bold text-uppercase" style="color: #fbbf24;">Last Name</label>
+                                <input asp-for="Input.LastName" class="form-control border-0 py-2 px-3 shadow-none"
+                                       style="background-color: #374151; color: #fff; border-radius: 10px;" placeholder="Smith" />
+                                <span asp-validation-for="Input.LastName" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.UserName" class="form-label small fw-bold text-uppercase" style="color: #fbbf24;">Username</label>
+                            <input asp-for="Input.UserName" class="form-control border-0 py-2 px-3 shadow-none"
+                                   style="background-color: #374151; color: #fff; border-radius: 10px;" placeholder="username" />
+                            <span asp-validation-for="Input.UserName" class="text-danger small"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.Email" class="form-label small fw-bold text-uppercase" style="color: #fbbf24;">Email</label>
+                            <input asp-for="Input.Email" class="form-control border-0 py-2 px-3 shadow-none"
+                                   style="background-color: #374151; color: #fff; border-radius: 10px;" placeholder="name@example.com" />
+                            <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.Password" class="form-label small fw-bold text-uppercase" style="color: #fbbf24;">Password</label>
+                                <input asp-for="Input.Password" class="form-control border-0 py-2 px-3 shadow-none"
+                                       style="background-color: #374151; color: #fff; border-radius: 10px;" placeholder="password" />
+                                <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="Input.ConfirmPassword" class="form-label small fw-bold text-uppercase" style="color: #fbbf24;">Confirm</label>
+                                <input asp-for="Input.ConfirmPassword" class="form-control border-0 py-2 px-3 shadow-none"
+                                       style="background-color: #374151; color: #fff; border-radius: 10px;" placeholder="password" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <button id="registerSubmit" type="submit" class="w-100 btn py-3 fw-bold text-uppercase shadow mt-2"
+                                style="background-color: #fbbf24; color: #111827; border-radius: 999px; transition: all 0.3s ease;">
+                            Register
+                        </button>
+                        <div class="mt-4 text-center">
+                            <p style="color: lightgray;">
+                                <span class="small">Already have an account?</span>
+                                <a asp-page="./Login" class="fw-bold text-decoration-none" style="color: #fbbf24;">Log in here</a>
                             </p>
                         </div>
                     </form>
-                }
-            }
-        </section>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
