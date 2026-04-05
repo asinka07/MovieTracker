@@ -19,6 +19,7 @@ builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDirectorService, DirectorService>();
 
 var app = builder.Build();
 

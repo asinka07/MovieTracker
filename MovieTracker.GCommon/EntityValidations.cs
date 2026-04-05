@@ -13,5 +13,10 @@ namespace MovieTracker.GCommon
         public const int GenreNameMaxLength = 100;
 
         public const int ReviewCommentMaxLength = 300;
+
+        public const int DirectorNameMinLength = 2;
+        public const int DirectorNameMaxLength = 100;
+        public const int DirectorBiographyMinLength = 10;
+        public const int DirectorBiographyMaxLength = 800;
     }
 }

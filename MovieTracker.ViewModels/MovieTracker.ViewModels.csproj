@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MovieTracker.Data.Models\MovieTracker.Data.Models.csproj" />
+    <ProjectReference Include="..\MovieTracker.GCommon\MovieTracker.GCommon.csproj" />
   </ItemGroup>
 
 </Project>

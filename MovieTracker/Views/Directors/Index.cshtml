@@ -1,0 +1,58 @@
+﻿@using MovieTracker.ViewModels.Director
+@model IEnumerable<DirectorIndexViewModel>
+@section Styles {
+    <link rel="stylesheet" href="~/css/directors.css" />
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 style="font-weight: 800; color: #1a202c;">Directors Archive</h1>
+        <a asp-action="Create" class="btn-add-custom">
+            <i class="fas fa-plus-circle"></i> + Add New Director
+        </a>
+    </div>
+
+    <div class="directors-wrapper">
+        @if (!Model.Any())
+        {
+            <div class="no-data">
+                <p class="fs-4">The archive is currently empty.</p>
+                <a asp-action="Create" class="text-success">Click here to add the first director</a>
+            </div>
+        }
+        else
+        {
+            @foreach (var director in Model)
+            {
+                <article class="director-entry">
+                    <div class="director-header">
+                        <h2 class="director-title">@director.Name</h2>
+                        @* Махнахме бутона за детайли, защото информацията е вече тук *@
+                    </div>
+                    
+                    <div class="director-bio">
+                        @if (!string.IsNullOrEmpty(director.Biography))
+                        {
+                            @director.Biography
+                        }
+                        else
+                        {
+                            <span class="text-muted"><em>Biography not provided for this director.</em></span>
+                        }
+                    </div>
+                </article>
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var message = '@TempData["SuccessMessage"]';
+            if (message) {
+                toastr.success(message);
+            }
+        });
+    </script>
+}
