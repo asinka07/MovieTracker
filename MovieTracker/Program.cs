@@ -18,6 +18,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => { options.SignIn.Re
 builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

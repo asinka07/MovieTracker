@@ -1,0 +1,45 @@
+﻿@using MovieTracker.ViewModels.Admin 
+@model AdminDashboardViewModel
+
+<div class="container mt-4">
+    <h1 class="mb-5"> Admin Dashboard</h1>
+    
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card bg-dark border-primary text-light h-100 shadow">
+                <div class="card-body text-center">
+                    <i class="bi bi-people fs-1 text-primary"></i>
+                    <h5 class="card-title mt-2">Users</h5>
+                    <h2 class="fw-bold">@Model.TotalUsers</h2>
+                    <a asp-action="Users" class="btn btn-outline-primary btn-sm rounded-pill mt-2">Manage</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-dark border-success text-light h-100 shadow">
+                <div class="card-body text-center">
+                    <i class="bi bi-film fs-1 text-success"></i>
+                    <h5 class="card-title mt-2">Total Movies</h5>
+                    <h2 class="fw-bold">@Model.TotalMovies</h2>
+                    <a asp-controller="Movies" asp-action="Index" class="btn btn-outline-success btn-sm rounded-pill mt-2">View All</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-dark border-warning text-light h-100 shadow">
+                <div class="card-body text-center position-relative">
+                    @if (Model.PendingMovies > 0)
+                    {
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@Model.PendingMovies</span>
+                    }
+                    <i class="bi bi-clock-history fs-1 text-warning"></i>
+                    <h5 class="card-title mt-2">Pending Approval</h5>
+                    <h2 class="fw-bold text-warning">@Model.PendingMovies</h2>
+                    <a asp-controller="Movies" asp-action="Index" class="btn btn-outline-warning btn-sm rounded-pill mt-2">Review</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
