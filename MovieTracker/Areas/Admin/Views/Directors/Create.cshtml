@@ -1,0 +1,27 @@
+﻿@model MovieTracker.ViewModels.Director.DirectorFormViewModel
+
+@{
+    ViewData["Title"] = "Add Director";
+}
+
+<h1>Add Director</h1>
+
+<form asp-area="Admin" asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Director Name</label>
+        <input asp-for="Name" class="form-control" placeholder="Enter director name..." />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Biography" class="form-label">Biography</label>
+        <textarea asp-for="Biography" class="form-control" rows="5" placeholder="Enter biography..."></textarea>
+        <span asp-validation-for="Biography" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-dark">Create</button>
+    <a asp-area="Admin" asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

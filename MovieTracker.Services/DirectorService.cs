@@ -56,5 +56,38 @@ namespace MovieTracker.Services
         {
             return await _context.Directors.AnyAsync(d => d.Id == id);
         }
+
+        public async Task<DirectorFormViewModel?> GetForEditAsync(int id)
+        {
+            var director = await _context.Directors.FindAsync(id);
+            if (director == null) return null;
+
+            return new DirectorFormViewModel
+            {
+                Id = director.Id,
+                Name = director.Name,
+                Biography = director.Biography
+            };
+        }
+
+        public async Task EditAsync(DirectorFormViewModel model)
+        {
+            var director = await _context.Directors.FindAsync(model.Id);
+            if (director == null) return;
+
+            director.Name = model.Name;
+            director.Biography = model.Biography;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var director = await _context.Directors.FindAsync(id);
+            if (director == null) return false;
+
+            _context.Directors.Remove(director);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

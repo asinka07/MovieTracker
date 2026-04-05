@@ -1,0 +1,74 @@
+﻿@using MovieTracker.ViewModels.Director
+@model IEnumerable<DirectorIndexViewModel>
+@section Styles {
+    <link rel="stylesheet" href="~/css/directors.css" />
+}
+@{
+    ViewData["Title"] = "Manage Directors";
+}
+
+<h1 class="mb-5">Manage Directors</h1>
+
+<a asp-area="Admin" asp-action="Create" class="btn btn-dark mb-4">
+    + Add Director
+</a>
+
+@if (!Model.Any())
+{
+    <p>No directors found.</p>
+}
+else
+{
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Biography</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var director in Model)
+            {
+                <tr>
+                    <td>@director.Name</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(director.Biography))
+                        {
+                            @(director.Biography.Length > 80
+                                ? director.Biography.Substring(0, 80) + "..."
+                                : director.Biography)
+                        }
+                        else
+                        {
+                            <em class="text-muted">No biography</em>
+                        }
+                    </td>
+                    <td>
+                        <a asp-area="Admin" asp-action="Edit" asp-route-id="@director.Id"
+                           class="btn btn-sm btn-outline-warning">Edit</a>
+
+                        <form asp-area="Admin" asp-action="Delete" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@director.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Are you sure?')">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var message = '@TempData["SuccessMessage"]';
+            if (message) {
+                toastr.success(message);
+            }
+        });
+    </script>
+}

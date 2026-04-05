@@ -14,5 +14,8 @@ namespace MovieTracker.Services.Interfaces
         Task<Director?> GetByIdAsync(int id);
         Task AddAsync(DirectorFormViewModel director);
         Task<bool> ExistsAsync(int id);
+        Task<DirectorFormViewModel?> GetForEditAsync(int id); 
+        Task EditAsync(DirectorFormViewModel model);           
+        Task<bool> DeleteAsync(int id);
     }
 }

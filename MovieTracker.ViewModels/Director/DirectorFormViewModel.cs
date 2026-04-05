@@ -10,6 +10,7 @@ namespace MovieTracker.ViewModels.Director
 {
     public class DirectorFormViewModel
     {
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Director name is mandatory.")]
         [StringLength(DirectorNameMaxLength, MinimumLength = DirectorNameMinLength,
