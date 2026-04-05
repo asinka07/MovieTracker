@@ -23,9 +23,6 @@ namespace MovieTracker.ViewModels.Movies
         [StringLength(MovieDescriptionMaxLength, ErrorMessage = "The description is too long. Max length - 500 characters")]
         public string Description { get; set; } = string.Empty;
 
-        public string AddedByUserId { get; set; }
-
-        public bool IsApproved {  get; set; }
         public IEnumerable<SelectListItem> Genres { get; set; } = new List<SelectListItem>();
     }
 }

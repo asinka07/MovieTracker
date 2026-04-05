@@ -36,17 +36,20 @@ namespace MovieTracker.Services
                 : query.OrderBy(m => m.Published);
 
             var movies = await query
-                .Select(m => new MoviePartialViewModel
-                {
-                    Id = m.Id,
-                    Title = m.Title,
-                    GenreName = m.Genre.Name,
-                    Published = m.Published,
-                    GenreId = m.GenreId,
-                    SortedMovies = sortedMovies,
-                    IsApproved = m.IsApproved
-                })
-                .ToListAsync();
+                    .Select(m => new MoviePartialViewModel
+                    {
+                        Id = m.Id,
+                        Title = m.Title,
+                        GenreName = m.Genre.Name,
+                        Published = m.Published,
+                        GenreId = m.GenreId,
+                        SortedMovies = sortedMovies,
+                        IsApproved = m.IsApproved,
+                        AddedByUserName = m.AddedByUser != null
+                            ? m.AddedByUser.UserName
+                            : "Unknown"
+                    })
+                    .ToListAsync();
 
             return new MovieIndexViewModel
             {

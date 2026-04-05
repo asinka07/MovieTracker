@@ -58,6 +58,13 @@ namespace MovieTracker.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                TempData["ErrorMessage"] = string.Join(" | ", errors);
+
                 var viewModel = await _movieService.GetForCreateAsync();
                 model.Genres = viewModel.Genres;
                 return View(model);
@@ -67,7 +74,12 @@ namespace MovieTracker.Controllers
             bool isApproved = User.IsInRole("Administrator");
 
             await _movieService.CreateAsync(model, userId, isApproved);
-            TempData["SuccessMessage"] = $"Movie \"{model.Title}\" added successfully!";
+
+            if (isApproved)
+                TempData["SuccessMessage"] = $"Movie \"{model.Title}\" added successfully!";
+            else
+                TempData["SuccessMessage"] = $"Movie \"{model.Title}\" has been submitted for admin approval!";
+
             return RedirectToAction(nameof(Index));
         }
 

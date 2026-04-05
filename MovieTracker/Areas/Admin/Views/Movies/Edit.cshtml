@@ -1,0 +1,35 @@
+﻿@model MovieTracker.ViewModels.Movies.CreateEditMovieViewModel
+
+@{
+    ViewData["Title"] = $"Edit Movie {Model.Title}";
+}
+
+<h1>Edit Movie</h1>
+
+<form asp-area="Admin" asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="GenreId" class="form-label">Genre</label>
+        <select asp-for="GenreId" class="form-select" asp-items="Model.Genres">
+            <option value="">Select Genre</option>
+        </select>
+        <span asp-validation-for="GenreId" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-dark">Save changes</button>
+    <a asp-area="Admin" asp-action="Index" class="btn btn-light">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
