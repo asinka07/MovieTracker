@@ -1,11 +1,11 @@
-﻿@using MovieTracker.ViewModels.Admin 
+﻿@using MovieTracker.ViewModels.Admin
 @model AdminDashboardViewModel
 
 <div class="container mt-4">
-    <h1 class="mb-5"> Admin Dashboard</h1>
-    
+    <h1 class="mb-5">Admin Dashboard</h1>
+
     <div class="row g-4">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card bg-dark border-primary text-light h-100 shadow">
                 <div class="card-body text-center">
                     <i class="bi bi-people fs-1 text-primary"></i>
@@ -15,29 +15,56 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card bg-dark border-success text-light h-100 shadow">
                 <div class="card-body text-center">
                     <i class="bi bi-film fs-1 text-success"></i>
                     <h5 class="card-title mt-2">Total Movies</h5>
                     <h2 class="fw-bold">@Model.TotalMovies</h2>
-                    <a asp-controller="Movies" asp-action="Index" class="btn btn-outline-success btn-sm rounded-pill mt-2">View All</a>
+                    <a asp-area="Admin" asp-controller="Movies" asp-action="Index" class="btn btn-outline-success btn-sm rounded-pill mt-2">View All</a>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card bg-dark border-warning text-light h-100 shadow">
                 <div class="card-body text-center position-relative">
                     @if (Model.PendingMovies > 0)
                     {
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">@Model.PendingMovies</span>
+                        <span class="position-absolute top-0 end-0 m-2 badge rounded-pill bg-danger">@Model.PendingMovies</span>
                     }
                     <i class="bi bi-clock-history fs-1 text-warning"></i>
                     <h5 class="card-title mt-2">Pending Approval</h5>
                     <h2 class="fw-bold text-warning">@Model.PendingMovies</h2>
-                    <a asp-controller="Movies" asp-action="Index" class="btn btn-outline-warning btn-sm rounded-pill mt-2">Review</a>
+                    <a asp-area="Admin" asp-controller="Movies" asp-action="Index" class="btn btn-outline-warning btn-sm rounded-pill mt-2">Review</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-dark border-info text-light h-100 shadow">
+                <div class="card-body text-center">
+                    <i class="bi bi-star fs-1 text-info"></i>
+                    <h5 class="card-title mt-2">Total Reviews</h5>
+                    <h2 class="fw-bold">@Model.TotalReviews</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-dark border-secondary text-light h-100 shadow">
+                <div class="card-body text-center">
+                    <i class="bi bi-camera-reels fs-1 text-secondary"></i>
+                    <h5 class="card-title mt-2">Directors</h5>
+                    <h2 class="fw-bold">@Model.TotalDirectors</h2>
+                    <a asp-area="Admin" asp-controller="Directors" asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill mt-2">View all</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-dark border-danger text-light h-100 shadow">
+                <div class="card-body text-center">
+                    <i class="bi bi-tags fs-1 text-danger"></i>
+                    <h5 class="card-title mt-2">Genres</h5>
+                    <h2 class="fw-bold">@Model.TotalGenres</h2>
+                    <a asp-area="Admin" asp-controller="Genres" asp-action="Index" class="btn btn-outline-danger btn-sm rounded-pill mt-2">View all</a>
                 </div>
             </div>
         </div>

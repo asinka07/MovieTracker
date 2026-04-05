@@ -26,7 +26,9 @@ namespace MovieTracker.Services
                 TotalUsers = await _userManager.Users.CountAsync(),
                 TotalMovies = await _context.Movies.CountAsync(),
                 PendingMovies = await _context.Movies.CountAsync(m => !m.IsApproved),
-                TotalReviews = await _context.Reviews.CountAsync()
+                TotalReviews = await _context.Reviews.CountAsync(),
+                TotalDirectors = await _context.Directors.CountAsync(),
+                TotalGenres = await _context.Genres.CountAsync()
             };
         }
 

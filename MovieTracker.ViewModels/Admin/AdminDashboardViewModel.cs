@@ -12,5 +12,7 @@ namespace MovieTracker.ViewModels.Admin
         public int TotalMovies { get; set; }
         public int PendingMovies { get; set; }
         public int TotalReviews { get; set; }
+        public int TotalDirectors { get; set; }
+        public int TotalGenres { get; set; }
     }
 }
