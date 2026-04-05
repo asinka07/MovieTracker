@@ -22,41 +22,48 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-					<ul class="navbar-nav flex-grow-1">
-						@if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
-						{
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle text-warning fw-bold" href="#" id="adminMenu" role="button" data-bs-toggle="dropdown">
-									<i class="bi bi-shield-lock"></i> Admin Panel
-								</a>
-								<ul class="dropdown-menu dropdown-menu-dark">
-									<li><a class="dropdown-item" asp-controller="Admin" asp-action="Dashboard"><i class="bi bi-graph-up"></i> Dashboard</a></li>
-									<li><a class="dropdown-item" asp-controller="Admin" asp-action="Users"><i class="bi bi-people"></i> Manage Users</a></li>
-									<li>
-										<a class="dropdown-item" asp-controller="Admin" asp-action="PendingMovies">
-											<i class="bi bi-hourglass-split"></i> Pending Content
-											<span class="badge bg-danger"></span>
-										</a>
-									</li>
-								</ul>
-							</li>
-						}
-						@if (User.Identity.IsAuthenticated)
-						{
-						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Directors" asp-action="Index">Directors</a>
-						</li>
-						}
-					</ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                        <i class="bi bi-graph-up"></i> Dashboard
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Movies" asp-action="Index">Movies</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Genres" asp-action="Index">Genres</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Directors" asp-action="Index">Directors</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Movies" asp-action="Pending">
+                                        <i class="bi bi-hourglass-split"></i> Pending
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Directors" asp-action="Index">Directors</a>
+                                </li>
+                            }
+                        }
+                    </ul>
 				</div>
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
 					<partial name="_LoginPartial" />
