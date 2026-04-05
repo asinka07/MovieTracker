@@ -4,7 +4,7 @@
 
 .director-entry {
     padding: 2rem 0;
-    border-bottom: 1px solid #edf2f7; 
+    border-bottom: 1px solid #edf2f7;
     position: relative;
 }
 
@@ -32,8 +32,8 @@
     font-size: 1.05rem;
     line-height: 1.7;
     color: #fff;
-    white-space: pre-line; 
-    margin-left: 19px; 
+    white-space: pre-line;
+    margin-left: 19px;
 }
 
 .no-data {
@@ -51,3 +51,36 @@
         background: darkgrey;
         border: gray;
     }
+
+.pagination {
+    gap: 6px;
+}
+
+.page-link {
+    background-color: transparent;
+    border: 1px solid #FBBF24;
+    color: #FBBF24;
+    border-radius: 6px !important;
+    padding: 6px 14px;
+    transition: all 0.2s ease;
+}
+
+    .page-link:hover {
+        background-color: #FBBF24;
+        color: #1a1a2e;
+        border-color: #FBBF24;
+    }
+
+.page-item.active .page-link {
+    background-color: #FBBF24;
+    border-color: #FBBF24;
+    color: #1a1a2e;
+    font-weight: 700;
+}
+
+.page-item.disabled .page-link {
+    background-color: transparent;
+    border-color: #555;
+    color: #555;
+    cursor: not-allowed;
+}

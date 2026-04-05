@@ -13,10 +13,24 @@ namespace MovieTracker.Controllers
             _directorService = directorService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 5)
         {
-            var directors = await _directorService.GetAllAsync();
-            return View(directors);
+            var allDirectors = await _directorService.GetAllAsync();
+
+            var totalPages = (int)Math.Ceiling(allDirectors.Count() / (double)pageSize);
+
+            var directors = allDirectors
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+
+            var model = new DirectorListViewModel
+            {
+                Directors = directors,
+                CurrentPage = page,
+                TotalPages = totalPages
+            };
+
+            return View(model);
         }
 
         [HttpGet]

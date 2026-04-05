@@ -1,5 +1,5 @@
 ﻿@using MovieTracker.ViewModels.Director
-@model IEnumerable<DirectorIndexViewModel>
+@model DirectorListViewModel
 @section Styles {
     <link rel="stylesheet" href="~/css/directors.css" />
 }
@@ -9,37 +9,60 @@
              + Add New Director
         </a>
 
-    <div class="directors-wrapper">
-        @if (!Model.Any())
+<div class="directors-wrapper">
+    @if (!Model.Directors.Any())
+    {
+        <div class="no-data">
+            <p class="fs-4">The archive is currently empty.</p>
+            <a asp-action="Create" class="text-success">Click here to add the first director</a>
+        </div>
+    }
+    else
+    {
+        @foreach (var director in Model.Directors)
         {
-            <div class="no-data">
-                <p class="fs-4">The archive is currently empty.</p>
-                <a asp-action="Create" class="text-success">Click here to add the first director</a>
-            </div>
+            <article class="director-entry">
+                <div class="director-header">
+                    <h2 class="director-title">@director.Name</h2>
+                </div>
+
+                <div class="director-bio">
+                    @if (!string.IsNullOrEmpty(director.Biography))
+                    {
+                        @director.Biography
+                    }
+                    else
+                    {
+                        <span class="no-data"><em>Biography not provided for this director.</em></span>
+                    }
+                </div>
+            </article>
         }
-        else
+        @if (Model.TotalPages > 1)
         {
-            @foreach (var director in Model)
-            {
-                <article class="director-entry">
-                    <div class="director-header">
-                        <h2 class="director-title">@director.Name</h2>
-                    </div>
-                    
-                    <div class="director-bio">
-                        @if (!string.IsNullOrEmpty(director.Biography))
-                        {
-                            @director.Biography
-                        }
-                        else
-                        {
-                            <span class="no-data"><em>Biography not provided for this director.</em></span>
-                        }
-                    </div>
-                </article>
-            }
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+
+                    <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage - 1)">«</a>
+                    </li>
+
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                            <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage + 1)">»</a>
+                    </li>
+
+                </ul>
+            </nav>
         }
-    </div>
+    }
+</div>
 
 @section Scripts {
     <script>
