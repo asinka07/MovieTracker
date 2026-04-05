@@ -4,13 +4,10 @@
     <link rel="stylesheet" href="~/css/directors.css" />
 }
 
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-5">
-        <h1 style="font-weight: 800; color: #1a202c;">Directors Archive</h1>
-        <a asp-action="Create" class="btn-add-custom">
-            <i class="fas fa-plus-circle"></i> + Add New Director
+        <h1 class="mb-5">Directors Archive</h1>
+        <a asp-action="Create" class="btn btn-dark mb-4">
+             + Add New Director
         </a>
-    </div>
 
     <div class="directors-wrapper">
         @if (!Model.Any())
@@ -43,7 +40,6 @@
             }
         }
     </div>
-</div>
 
 @section Scripts {
     <script>

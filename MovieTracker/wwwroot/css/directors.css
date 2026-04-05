@@ -37,23 +37,18 @@
     margin-left: 19px; 
 }
 
-.btn-add-custom {
-    background-color: #2d3748;
-    color: white;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-    .btn-add-custom:hover {
-        background-color: #1a202c;
-        color: #34d399;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
 .no-data {
     text-align: center;
     padding: 4rem 0;
     color: #a0aec0;
 }
+
+.btn-dark {
+    background: gray;
+    border: gray;
+}
+
+    .btn-dark:hover {
+        background: darkgrey;
+        border: gray;
+    }

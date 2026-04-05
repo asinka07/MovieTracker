@@ -4,19 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieTracker.Services.Interfaces;
 
-namespace MovieTracker.Controllers
+namespace MovieTracker.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = "Administrator")]
-    public class AdminController : Controller
+    public class DashboardController : Controller
     {
         private readonly IUserService _userService;
 
-        public AdminController(IUserService userService)
+        public DashboardController(IUserService userService)
         {
             _userService = userService;
         }
 
-        public async Task<IActionResult> Dashboard()
+        public async Task<IActionResult> Index()
         {
             var stats = await _userService.GetDashboardStatsAsync();
             return View(stats);
