@@ -24,7 +24,8 @@ namespace MovieTracker.Services
                 .Select(g => new GenreListViewModel
                 {
                     Id = g.Id,
-                    Name = g.Name
+                    Name = g.Name,
+                    MovieCount = g.Movies.Count
                 })
                 .ToListAsync();
         }
@@ -40,6 +41,16 @@ namespace MovieTracker.Services
             _dbContext.Add(genre);
             await _dbContext.SaveChangesAsync();
 
+            return true;
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var genre = await _dbContext.Genres.FindAsync(id);
+            if (genre == null) return false;
+
+            _dbContext.Genres.Remove(genre);
+            await _dbContext.SaveChangesAsync();
             return true;
         }
     }

@@ -9,5 +9,6 @@ namespace MovieTracker.Services.Interfaces
     {
         Task<IEnumerable<GenreListViewModel>> GetAllAsync();
         Task<bool> CreateAsync(CreateGenreViewModel model);
+        Task<bool> DeleteAsync(int id);
     }
 }

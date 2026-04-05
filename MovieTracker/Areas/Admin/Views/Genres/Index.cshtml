@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MovieTracker.ViewModels.Genre.GenreListViewModel>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/genres.css" />
+}
+
+@{
+    ViewData["Title"] = "Manage Genres";
+}
+
+<h1 class="mb-5">Manage Genres</h1>
+
+<a asp-area="Admin" asp-action="Create" class="btn btn-dark mb-4">
+    + Add Genre
+</a>
+
+@if (!Model.Any())
+{
+    <p>No genres found.</p>
+}
+else
+{
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Movies</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var genre in Model)
+            {
+                <tr>
+                    <td>@genre.Name</td>
+                    <td>@genre.MovieCount</td>
+                    <td>
+                        <form asp-area="Admin" asp-action="Delete" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@genre.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Are you sure?')">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var message = '@TempData["SuccessMessage"]';
+            if (message) {
+                toastr.success(message);
+            }
+        });
+    </script>
+}
