@@ -1,5 +1,4 @@
 ﻿.directors-wrapper {
-    max-width: 900px;
     margin: 0 auto;
 }
 
@@ -23,16 +22,16 @@
 .director-title {
     font-size: 1.75rem;
     font-weight: 700;
-    color: #1a202c;
+    color: #FBBF24;
     margin: 0;
-    border-left: 4px solid #34d399;
+    border-left: 4px solid #f6e7bf;
     padding-left: 15px;
 }
 
 .director-bio {
     font-size: 1.05rem;
     line-height: 1.7;
-    color: #4a5568;
+    color: #fff;
     white-space: pre-line; 
     margin-left: 19px; 
 }
@@ -40,7 +39,7 @@
 .no-data {
     text-align: center;
     padding: 4rem 0;
-    color: #a0aec0;
+    color: darkgrey;
 }
 
 .btn-dark {
