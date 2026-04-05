@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static MovieTracker.GCommon.EntityValidations;
-using Microsoft.AspNetCore.Identity;
 
 
 namespace MovieTracker.Data.Models
@@ -26,7 +27,9 @@ namespace MovieTracker.Data.Models
         [Required(ErrorMessage = "The description field is required!")]
         [StringLength(MovieDescriptionMaxLength, ErrorMessage = "The description is too long. Max length - 500 characters")]
         public string Description { get; set; }
-
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public int? DirectorId { get; set; }
+        [ForeignKey(nameof(DirectorId))]
+        public virtual Director? Director { get; set; }
     }
 }
