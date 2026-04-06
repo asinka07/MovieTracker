@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MovieTracker.Data.Models\MovieTracker.Data.Models.csproj" />
     <ProjectReference Include="..\MovieTracker.Data\MovieTracker.Data.csproj" />
     <ProjectReference Include="..\MovieTracker.ViewModels\MovieTracker.ViewModels.csproj" />

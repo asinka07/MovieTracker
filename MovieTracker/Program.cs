@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieTracker.Data;
 using MovieTracker.Services;
 using MovieTracker.Services.Interfaces;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDirectorService, DirectorService>();
 builder.Services.AddScoped<IWatchlistService, WatchlistService>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
