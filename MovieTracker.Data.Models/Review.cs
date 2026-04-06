@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using static MovieTracker.GCommon.EntityValidations;
 
 namespace MovieTracker.Data.Models
@@ -14,5 +15,8 @@ namespace MovieTracker.Data.Models
         [Required(ErrorMessage = "Please, type a comment!")]
         [StringLength(ReviewCommentMaxLength, ErrorMessage = "Comment length can be maximum 300 characters.")]
         public string Comment { get; set; }
+
+        public string? UserId { get; set; }      
+        public IdentityUser? User { get; set; }
     }
 }
