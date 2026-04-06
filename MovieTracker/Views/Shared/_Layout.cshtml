@@ -1,11 +1,11 @@
 ﻿@inject MovieTracker.Services.Interfaces.IMovieService MovieService
 @{
-    int pendingCount = 0;
-    if (User.IsInRole("Administrator"))
-    {
-        var pending = await MovieService.GetPendingAsync();
-        pendingCount = pending.Count();
-    }
+	int pendingCount = 0;
+	if (User.IsInRole("Administrator"))
+	{
+		var pending = await MovieService.GetPendingAsync();
+		pendingCount = pending.Count();
+	}
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -31,57 +31,73 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            @if (User.IsInRole("Administrator"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
-                                        <i class="bi bi-graph-up"></i> Dashboard
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link" asp-area="Admin" asp-controller="Users" asp-action="Index">
-                                    <i class="bi bi-people"></i> Manage Users
-                                </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Admin" asp-controller="Movies" asp-action="Index">Movies</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Admin" asp-controller="Genres" asp-action="Index">Genres</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Admin" asp-controller="Directors" asp-action="Index">Directors</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Admin" asp-controller="Movies" asp-action="Pending">
-                                        <i class="bi bi-hourglass-split"></i> Pending
-                                        @if (pendingCount > 0)
-                                        {
-                                            <span class="badge rounded-pill bg-danger">@pendingCount</span>
-                                        }
-                                    </a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Directors" asp-action="Index">Directors</a>
-                                </li>
-                            }
-                        }
-                    </ul>
+					<ul class="navbar-nav flex-grow-1">
+						@if (User.Identity.IsAuthenticated)
+						{
+							@if (User.IsInRole("Administrator"))
+							{
+								<li class="nav-item">
+									<a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+										<i class="bi bi-graph-up"></i> Dashboard
+									</a>
+								</li>
+
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+										<i class="bi bi-collection-play"></i> Content
+									</a>
+									<ul class="dropdown-menu dropdown-menu-dark">
+										<li>
+											<a class="dropdown-item" asp-area="Admin" asp-controller="Movies" asp-action="Index">
+												<i class="bi bi-film"></i> Movies
+											</a>
+										</li>
+										<li>
+											<a class="dropdown-item" asp-area="Admin" asp-controller="Genres" asp-action="Index">
+												<i class="bi bi-tags"></i> Genres
+											</a>
+										</li>
+										<li>
+											<a class="dropdown-item" asp-area="Admin" asp-controller="Directors" asp-action="Index">
+												<i class="bi bi-camera-reels"></i> Directors
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="nav-item">
+									<a class="nav-link" asp-area="Admin" asp-controller="Movies" asp-action="Pending">
+										<i class="bi bi-hourglass-split"></i> Pending
+										@if (pendingCount > 0)
+										{
+											<span class="badge rounded-pill bg-danger">@pendingCount</span>
+										}
+									</a>
+								</li>
+
+								<li class="nav-item">
+									<a class="nav-link" asp-area="Admin" asp-controller="Users" asp-action="Index">
+										<i class="bi bi-people"></i> Users
+									</a>
+								</li>
+							}
+							else
+							{
+								<li class="nav-item">
+									<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" asp-area="" asp-controller="Directors" asp-action="Index">Directors</a>
+								</li>
+							}
+						}
+					</ul>
 				</div>
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
 					<partial name="_LoginPartial" />
