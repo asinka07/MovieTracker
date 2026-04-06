@@ -274,5 +274,21 @@ namespace MovieTracker.Tests
 
             Assert.Null(result);
         }
+
+        [Fact]
+        public async Task GetForCreateAsync_ReturnsGenresAndDirectors()
+        {
+            var context = CreateInMemoryContext();
+            context.Genres.Add(new Genre { Id = 1, Name = "Action" });
+            context.Directors.Add(new Director { Id = 1, Name = "Nolan", Biography = "Test." });
+            await context.SaveChangesAsync();
+
+            var service = new MovieService(context);
+            var result = await service.GetForCreateAsync();
+
+            Assert.NotNull(result);
+            Assert.Single(result.Genres);
+            Assert.Single(result.Directors);
+        }
     }
 }

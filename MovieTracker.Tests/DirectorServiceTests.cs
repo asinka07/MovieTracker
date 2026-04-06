@@ -76,5 +76,33 @@ namespace MovieTracker.Tests
 
             Assert.False(result);
         }
+
+        [Fact]
+        public async Task GetForEditAsync_ReturnsCorrectDirector()
+        {
+            var context = CreateInMemoryContext();
+            context.Directors.Add(new Director { Id = 1, Name = "Christopher Nolan", Biography = "British-American filmmaker." });
+            await context.SaveChangesAsync();
+
+            var service = new DirectorService(context);
+            var result = await service.GetForEditAsync(1);
+
+            Assert.NotNull(result);
+            Assert.Equal("Christopher Nolan", result.Name);
+        }
+
+        [Fact]
+        public async Task GetByIdAsync_ReturnsCorrectDirector()
+        {
+            var context = CreateInMemoryContext();
+            context.Directors.Add(new Director { Id = 1, Name = "Christopher Nolan", Biography = "British-American filmmaker." });
+            await context.SaveChangesAsync();
+
+            var service = new DirectorService(context);
+            var result = await service.GetByIdAsync(1);
+
+            Assert.NotNull(result);
+            Assert.Equal("Christopher Nolan", result.Name);
+        }
     }
 }
