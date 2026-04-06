@@ -15,7 +15,7 @@ namespace MovieTracker.Services.Interfaces
         Task CreateAsync(CreateEditMovieViewModel model, string userId, bool isApproved);
         Task EditAsync(CreateEditMovieViewModel model);
         Task DeleteAsync(int id);
-        Task AddReviewAsync(int movieId, string comment);
+        Task AddReviewAsync(int movieId, string comment, string userId);
         Task ApproveMovieAsync(int id);
     }
 }

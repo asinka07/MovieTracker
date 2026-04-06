@@ -132,7 +132,10 @@ namespace MovieTracker.Controllers
         public async Task<IActionResult> AddReview(int movieId, string comment, int? genreId, string sortedMovies)
         {
             if (!string.IsNullOrWhiteSpace(comment))
-                await _movieService.AddReviewAsync(movieId, comment);
+            {
+                string userId = _userManager.GetUserId(User);
+                await _movieService.AddReviewAsync(movieId, comment, userId);
+            }
 
             TempData["SuccessMessage"] = "Your review is published!";
             return RedirectToAction("Details", new { id = movieId, genreId, sortedMovies });

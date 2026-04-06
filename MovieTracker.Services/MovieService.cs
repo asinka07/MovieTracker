@@ -189,12 +189,13 @@ namespace MovieTracker.Services
             }
         }
 
-        public async Task AddReviewAsync(int movieId, string comment)
+        public async Task AddReviewAsync(int movieId, string comment, string userId)
         {
             var review = new Review
             {
                 MovieId = movieId,
-                Comment = comment
+                Comment = comment,
+                UserId = userId
             };
 
             _dbContext.Reviews.Add(review);
