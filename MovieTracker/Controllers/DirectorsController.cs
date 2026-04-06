@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieTracker.Services.Interfaces;
 using MovieTracker.ViewModels.Director;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MovieTracker.Controllers
 {
+    [Authorize]
     public class DirectorsController : Controller
     {
         private readonly IDirectorService _directorService;

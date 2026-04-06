@@ -6,6 +6,7 @@ using MovieTracker.ViewModels.Movies;
 
 namespace MovieTracker.Controllers
 {
+
     public class MoviesController : Controller
     {
         private readonly IMovieService _movieService;
@@ -17,6 +18,7 @@ namespace MovieTracker.Controllers
             _userManager = userManager;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index(int? genreId, string sortedMovies)
         {
             bool isAdmin = User.IsInRole("Administrator");
@@ -25,6 +27,7 @@ namespace MovieTracker.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         public async Task<IActionResult> Details(int? id, int? genreId, string sortedMovies)
         {
             if (id == null) return NotFound();
@@ -46,6 +49,7 @@ namespace MovieTracker.Controllers
             return PartialView("_MovieDetailsPartialView", model);
         }
 
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             var viewModel = await _movieService.GetForCreateAsync();
@@ -102,6 +106,7 @@ namespace MovieTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CreateEditMovieViewModel model)
         {

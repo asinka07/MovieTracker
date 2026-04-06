@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MovieTracker.Controllers
 {
+    [Authorize]
     public class GenresController : Controller
     {
         private readonly IGenreService _genreService;
