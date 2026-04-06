@@ -134,6 +134,9 @@ namespace MovieTracker.Areas.Identity.Pages.Account
                     await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("FirstName", Input.FirstName));
                     await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("LastName", Input.LastName));
 
+                    var confirmToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await _userManager.ConfirmEmailAsync(user, confirmToken);
+
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

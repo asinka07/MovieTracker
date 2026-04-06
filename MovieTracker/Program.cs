@@ -22,7 +22,6 @@ builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDirectorService, DirectorService>();
 builder.Services.AddScoped<IWatchlistService, WatchlistService>();
-builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
