@@ -8,16 +8,35 @@
     <h3>Your Movie Space</h3>
 
     <div class="home-buttons">
-        <a asp-controller="Movies" asp-action="Index" class="btn btn-dark">Browse Movies</a>
-        <a asp-controller="Genres" asp-action="Index" class="btn btn-outline-dark">Genres</a>
+        @if (User.IsInRole("Administrator"))
+        {
+            <a asp-area="Admin" asp-controller="Movies" asp-action="Index" class="btn btn-dark">Movies</a>
+            <a asp-area="Admin" asp-controller="Genres" asp-action="Index" class="btn btn-outline-dark">Genres</a>
+        }
+        else
+        {
+            <a asp-controller="Movies" asp-action="Index" class="btn btn-dark">Browse Movies</a>
+            <a asp-controller="Genres" asp-action="Index" class="btn btn-outline-dark">Genres</a>
+        }
     </div>
 </div>
 
 <div class="home-section">
-    <p>Add titles you love. Update descriptions when you want to improve them. Remove movies that no longer feel relevant.</p>
-    <p>No accounts. No limits. Just a shared place where anyone can contribute.</p>
-    <p>Pick a genre from the dropdown when adding a movie — and if it doesn’t exist yet, create it.</p>
-    <p>Build the collection. Explore it. Find something to watch whenever the mood hits.</p>
+    @if (User.IsInRole("Administrator"))
+    {
+        <p>Welcome back, Admin! Manage the movie collection, approve pending submissions...</p>
+        <p>Use the navigation menu to manage movies, genres, directors, and users.</p>
+    }
+    else if (User.Identity.IsAuthenticated)
+    {
+        <p>Welcome back! Browse the movie collection, add new titles, write reviews...</p>
+        <p>Added a movie? It will be reviewed by an admin before it appears in the collection.</p>
+    }
+    else
+    {
+        <p>MovieTracker is a shared space where movie lovers can discover and explore titles...</p>
+        <p>Login or register to start adding movies, writing reviews, and building the collection.</p>
+    }
 </div>
 
 <div class="home-section">
@@ -57,7 +76,18 @@
                 <span class="rank-icon">
                     @(i == 0 ? Html.Raw("&#x1F947;") : i == 1 ? Html.Raw("&#129352;") : i == 2 ? Html.Raw("&#129353;") : Html.Raw("&#127916;"))
                 </span>
-                <a asp-controller="Movies" asp-action="Index" asp-route-genreId="@genre.Id" class="genre-tag"> @genre.Name <span class="genre-count">@genre.MoviesCount</span></a>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <a asp-area="Admin" asp-controller="Movies" asp-action="Index" asp-route-genreId="@genre.Id" class="genre-tag">
+                        @genre.Name <span class="genre-count">@genre.MoviesCount</span>
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Movies" asp-action="Index" asp-route-genreId="@genre.Id" class="genre-tag">
+                        @genre.Name <span class="genre-count">@genre.MoviesCount</span>
+                    </a>
+                }
             </span>
         }
     </div>
