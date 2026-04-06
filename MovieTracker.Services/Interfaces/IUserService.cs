@@ -10,8 +10,11 @@ namespace MovieTracker.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<IEnumerable<IdentityUser>> GetAllUsersAsync();
+        Task<IEnumerable<UserDetailsViewModel>> GetAllUsersAsync();
         Task<bool> DeleteUserAsync(string userId);
         Task<AdminDashboardViewModel> GetDashboardStatsAsync();
+        Task<bool> PromoteAsync(string userId);    
+        Task<bool> DemoteAsync(string userId);
+        Task<UserDetailsViewModel?> GetUserDetailsAsync(string userId);
     }
 }
