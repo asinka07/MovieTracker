@@ -1,0 +1,50 @@
+﻿@using MovieTracker.ViewModels.Movies
+@model MovieFullDetailsViewModel
+
+@{
+    ViewData["Title"] = $"Review - {Model.Title}";
+}
+
+<h1 class="mb-5">@Model.Title</h1>
+
+<div class="card bg-dark text-light border-secondary">
+    <div class="card-body">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <h5 class="text-secondary">Genre</h5>
+                <p>@Model.GenreName</p>
+            </div>
+            <div class="col-md-6">
+                <h5 class="text-secondary">Published</h5>
+                <p>@Model.Published.ToString("dd MMM yyyy")</p>
+            </div>
+            <div class="col-md-12">
+                <h5 class="text-secondary">Description</h5>
+                <p>@Model.Description</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <form asp-area="Admin" asp-controller="Movies" asp-action="Approve" method="post" class="d-inline">
+        <input type="hidden" name="movieId" value="@Model.Id" />
+        <input type="hidden" name="returnAction" value="Pending" />
+        <button type="submit" class="btn btn-outline-success">
+            <i class="bi bi-check-lg"></i> Approve
+        </button>
+    </form>
+
+    <form asp-area="Admin" asp-controller="Movies" asp-action="DeleteConfirmed" method="post" class="d-inline">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="hidden" name="returnAction" value="Pending" />
+        <button type="submit" class="btn btn-outline-danger"
+                onclick="return confirm('Are you sure?')">
+            <i class="bi bi-trash"></i> Delete
+        </button>
+    </form>
+
+    <a asp-area="Admin" asp-controller="Movies" asp-action="Pending" class="btn btn-secondary ms-2">
+        Back to Pending
+    </a>
+</div>

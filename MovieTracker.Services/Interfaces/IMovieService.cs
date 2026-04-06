@@ -17,5 +17,6 @@ namespace MovieTracker.Services.Interfaces
         Task DeleteAsync(int id);
         Task AddReviewAsync(int movieId, string comment, string userId);
         Task ApproveMovieAsync(int id);
+        Task<IEnumerable<MoviePartialViewModel>> GetPendingAsync();
     }
 }

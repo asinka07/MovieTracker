@@ -14,6 +14,7 @@ namespace MovieTracker.ViewModels.Movies
         public string SortedMovies { get; set; }
         public bool IsApproved { get; set; }
         public string AddedByUserName { get; set; }
+        public string Description { get; set; }
     }
 
 }

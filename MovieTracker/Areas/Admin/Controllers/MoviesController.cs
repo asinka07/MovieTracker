@@ -73,20 +73,33 @@ namespace MovieTracker.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Approve(int movieId)
+        public async Task<IActionResult> Approve(int movieId, string returnAction = "Index")
         {
             await _movieService.ApproveMovieAsync(movieId);
             TempData["SuccessMessage"] = "The movie has been approved!";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(returnAction);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string returnAction = "Index")
         {
             await _movieService.DeleteAsync(id);
             TempData["SuccessMessage"] = "Movie deleted successfully!";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(returnAction);
+        }
+
+        public async Task<IActionResult> Pending()
+        {
+            var movies = await _movieService.GetPendingAsync();
+            return View(movies);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var movie = await _movieService.GetDetailsAsync(id);
+            if (movie == null) return NotFound();
+            return View(movie);
         }
     }
 }

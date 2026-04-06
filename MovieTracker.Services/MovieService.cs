@@ -201,5 +201,22 @@ namespace MovieTracker.Services
             _dbContext.Reviews.Add(review);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<MoviePartialViewModel>> GetPendingAsync()
+        {
+            return await _dbContext.Movies
+                .Where(m => !m.IsApproved)
+                .Select(m => new MoviePartialViewModel
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    GenreName = m.Genre.Name,
+                    Published = m.Published,
+                    IsApproved = m.IsApproved,
+                    AddedByUserName = m.AddedByUser != null ? m.AddedByUser.UserName : "Unknown",
+                    Description = m.Description
+                })
+                .ToListAsync();
+        }
     }
 }
