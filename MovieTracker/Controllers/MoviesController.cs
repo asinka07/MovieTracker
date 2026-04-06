@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MovieTracker.Services;
 using MovieTracker.Services.Interfaces;
 using MovieTracker.ViewModels.Movies;
 
@@ -10,12 +11,14 @@ namespace MovieTracker.Controllers
     public class MoviesController : Controller
     {
         private readonly IMovieService _movieService;
+        private readonly IWatchlistService _watchlistService;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public MoviesController(IMovieService movieService, UserManager<IdentityUser> userManager)
+        public MoviesController(IMovieService movieService, UserManager<IdentityUser> userManager, IWatchlistService watchlistService)
         {
             _movieService = movieService;
             _userManager = userManager;
+            _watchlistService = watchlistService;
         }
 
         [Authorize]
@@ -34,6 +37,12 @@ namespace MovieTracker.Controllers
 
             var viewModel = await _movieService.GetDetailsAsync(id.Value);
             if (viewModel == null) return NotFound();
+
+            if (User.Identity.IsAuthenticated && !User.IsInRole("Administrator"))
+            {
+                string userId = _userManager.GetUserId(User);
+                viewModel.IsInWatchlist = await _watchlistService.IsInWatchlistAsync(userId, id.Value);
+            }
 
             ViewData["GenreId"] = genreId;
             ViewData["SortedMovies"] = sortedMovies;

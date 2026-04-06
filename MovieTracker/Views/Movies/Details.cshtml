@@ -13,6 +13,25 @@
 		<div class="movie-buttons">
 			<a asp-action="Index" asp-route-genreId="@(ViewData["GenreId"])" asp-route-sortedMovies="@(ViewData["SortedMovies"])" class="btn btn-dark">&#8592; Back</a>
 			<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-light">Edit</a>
+			@if (User.Identity.IsAuthenticated && !User.IsInRole("Administrator"))
+			{
+				if (Model.IsInWatchlist)
+				{
+					<form asp-controller="Watchlist" asp-action="Remove" method="post" class="d-inline">
+						@Html.AntiForgeryToken()
+						<input type="hidden" name="movieId" value="@Model.Id" />
+						<button type="submit" class="btn btn-warning">★ Remove from Watchlist</button>
+					</form>
+				}
+				else
+				{
+					<form asp-controller="Watchlist" asp-action="Add" method="post" class="d-inline">
+						@Html.AntiForgeryToken()
+						<input type="hidden" name="movieId" value="@Model.Id" />
+						<button type="submit" class="btn btn-outline-warning">☆ Add to Watchlist</button>
+					</form>
+				}
+			}
 			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
 		</div>
 	</div>

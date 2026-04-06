@@ -23,7 +23,7 @@ namespace MovieTracker.Services
             {
                 LatestMovies = await _dbcontext.Movies
                     .OrderByDescending(m => m.Published)
-                    .Take(5)
+                    .Take(6)
                     .Select(m => new HomeMovieViewModel
                     {
                         Id = m.Id,
