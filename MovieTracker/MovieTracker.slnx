@@ -11,4 +11,5 @@
     <Project Path="MovieTracker.csproj" />
   </Folder>
   <Project Path="../MovieTracker.GCommon/MovieTracker.GCommon.csproj" Id="0905c4b9-e5cc-43ce-8764-90e44bd70125" />
+  <Project Path="../MovieTracker.Tests/MovieTracker.Tests.csproj" Id="95517faf-b680-4b1d-9fd2-e4c78871ac45" />
 </Solution>
