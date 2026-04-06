@@ -15,6 +15,8 @@ namespace MovieTracker.ViewModels.Movies
         public bool IsApproved { get; set; }
         public string AddedByUserName { get; set; }
         public string Description { get; set; }
+        public string? DirectorName { get; set; }
+
     }
 
 }

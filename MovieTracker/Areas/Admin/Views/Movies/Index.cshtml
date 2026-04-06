@@ -47,6 +47,7 @@ else
             <tr>
                 <th>Title</th>
                 <th>Genre</th>
+                <th>Director</th>
                 <th>Added By</th>
                 <th>Published</th>
                 <th>Status</th>
@@ -59,6 +60,7 @@ else
                 <tr>
                     <td>@movie.Title</td>
                     <td>@movie.GenreName</td>
+                    <td>@(string.IsNullOrEmpty(movie.DirectorName) ? "-" : movie.DirectorName)</td>
                     <td>@movie.AddedByUserName</td>
                     <td>@movie.Published.ToString("dd MMM yyyy")</td>
                     <td>

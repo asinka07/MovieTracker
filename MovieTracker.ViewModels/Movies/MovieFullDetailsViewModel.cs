@@ -14,5 +14,7 @@ namespace MovieTracker.ViewModels.Movies
         public DateTime Published { get; set; }
         public List<ReviewViewModel> Reviews { get; set; } = new List<ReviewViewModel>();
         public bool IsInWatchlist { get; set; }
+
+        public string? DirectorName { get; set; }
     }
 }

@@ -22,6 +22,10 @@
                 <h5 class="text-secondary">Description</h5>
                 <p>@Model.Description</p>
             </div>
+            <div class="col-md-6">
+                <h5 class="text-secondary">Director</h5>
+                <p>@(string.IsNullOrEmpty(Model.DirectorName) ? "No director assigned" : Model.DirectorName)</p>
+            </div>
         </div>
     </div>
 </div>

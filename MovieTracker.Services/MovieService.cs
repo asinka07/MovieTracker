@@ -47,7 +47,8 @@ namespace MovieTracker.Services
                         IsApproved = m.IsApproved,
                         AddedByUserName = m.AddedByUser != null
                             ? m.AddedByUser.UserName
-                            : "Unknown"
+                            : "Unknown",
+                        DirectorName = m.Director != null ? m.Director.Name : null
                     })
                     .ToListAsync();
 
@@ -71,6 +72,7 @@ namespace MovieTracker.Services
             var movie = await _dbContext.Movies
                 .Include(m => m.Genre)
                 .Include(m => m.Reviews)
+                .Include(m => m.Director)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (movie == null) return null;
@@ -82,6 +84,7 @@ namespace MovieTracker.Services
                 GenreName = movie.Genre.Name,
                 Description = movie.Description,
                 Published = movie.Published,
+                DirectorName = movie.Director?.Name,
                 Reviews = movie.Reviews
                     .Select(r => new ReviewViewModel { Comment = r.Comment })
                     .ToList()
@@ -115,6 +118,13 @@ namespace MovieTracker.Services
                         Value = g.Id.ToString(),
                         Text = g.Name
                     })
+                    .ToListAsync(),
+                Directors = await _dbContext.Directors
+                    .Select(d => new SelectListItem
+                    {
+                        Value = d.Id.ToString(),
+                        Text = d.Name
+                    })
                     .ToListAsync()
             };
         }
@@ -130,11 +140,19 @@ namespace MovieTracker.Services
                 Title = movie.Title,
                 Description = movie.Description,
                 GenreId = movie.GenreId,
+                DirectorId = movie.DirectorId,
                 Genres = await _dbContext.Genres
                     .Select(g => new SelectListItem
                     {
                         Value = g.Id.ToString(),
                         Text = g.Name
+                    })
+                    .ToListAsync(),
+                Directors = await _dbContext.Directors
+                    .Select(d => new SelectListItem
+                    {
+                        Value = d.Id.ToString(),
+                        Text = d.Name
                     })
                     .ToListAsync()
             };
@@ -147,6 +165,7 @@ namespace MovieTracker.Services
                 Title = model.Title,
                 Description = model.Description,
                 GenreId = model.GenreId,
+                DirectorId = model.DirectorId,
                 Published = DateTime.Now,
                 AddedByUserId = userId,
                 IsApproved = isApproved
@@ -175,6 +194,7 @@ namespace MovieTracker.Services
             movie.Title = model.Title;
             movie.Description = model.Description;
             movie.GenreId = model.GenreId;
+            movie.DirectorId = model.DirectorId;
 
             await _dbContext.SaveChangesAsync();
         }

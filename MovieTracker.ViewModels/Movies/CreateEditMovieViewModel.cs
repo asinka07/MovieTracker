@@ -24,5 +24,7 @@ namespace MovieTracker.ViewModels.Movies
         public string Description { get; set; } = string.Empty;
 
         public IEnumerable<SelectListItem> Genres { get; set; } = new List<SelectListItem>();
+        public int? DirectorId { get; set; } 
+        public IEnumerable<SelectListItem> Directors { get; set; } = new List<SelectListItem>();
     }
 }

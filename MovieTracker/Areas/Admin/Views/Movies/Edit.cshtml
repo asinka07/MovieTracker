@@ -22,6 +22,13 @@
         <span asp-validation-for="GenreId" class="text-danger"></span>
     </div>
     <div class="mb-3">
+        <label asp-for="DirectorId" class="form-label">Director</label>
+        <select asp-for="DirectorId" class="form-select" asp-items="Model.Directors">
+            <option value="">Select Director</option>
+        </select>
+        <a asp-controller="Directors" asp-action="Create">If the director doesn't exist, you can add it from here.</a>
+    </div>
+    <div class="mb-3">
         <label asp-for="Description" class="form-label"></label>
         <textarea asp-for="Description" class="form-control"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>

@@ -48,6 +48,10 @@
 		<div class="movie-det">
 			<p><strong>Genre:</strong> @Model.GenreName</p>
 			<p><strong>Published:</strong> @Model.Published.ToString("dd/MM/yyyy")</p>
+			@if (!string.IsNullOrEmpty(Model.DirectorName))
+			{
+				<p><strong>Director:</strong> @Model.DirectorName</p>
+			}
 		</div>
 	</div>
 
